@@ -12,12 +12,13 @@
 
   <title>철거해줘</title>
 
-  <link rel = "stylesheet" href = "{% static 'style.css' %}" type = "text/css" />
+  {% comment %} <link rel = "stylesheet" href = "{% static 'style.css' %}" type = "text/css" /> {% endcomment %}
+
   <!-- Bootstrap core CSS -->
-  <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{% static 'lionproject/css/bootstrap.min.css' %}" rel="stylesheet">
 
   <!-- Custom styles for this template -->
-  <link href="css/scrolling-nav.css" rel="stylesheet">
+  <link href="{% static 'lionproject/css/scrolling-nav.css' %}" rel="stylesheet">
 
   {% block sytle %}
   {% endblock %}
@@ -61,14 +62,14 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="vendor/jquery/jquery.min.js"></script>
-  <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="{% static 'lionproject/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'lionproject/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 
   <!-- Plugin JavaScript -->
-  <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="{% static 'lionproject/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
 
   <!-- Custom JavaScript for this theme -->
-  <script src="js/scrolling-nav.js"></script>
+  <script src="{% static 'lionproject/js/scrolling-nav.js' %}"></script>
 
 </body>
 
