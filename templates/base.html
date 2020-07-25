@@ -5,6 +5,9 @@
 
 <head>
 
+  {% block title %}
+  {% endblock %}
+
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
@@ -13,10 +16,12 @@
   <link rel = "stylesheet" href = "{% static 'style.css' %}" type = "text/css" />
 
   <!-- Bootstrap core CSS -->
-  <link href="{% static 'lionproject/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link href="{% static 'lionproject/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
 
   <!-- Custom styles for this template -->
   <link href="{% static 'lionproject/css/scrolling-nav.css' %}" rel="stylesheet">
+
+
 
   {% block sytle %}
   {% endblock %}
