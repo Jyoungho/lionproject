@@ -37,8 +37,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'heago',
-    
+    'accounts',
+    'chat',
+    'estimates',
+    'heajo',
+    'lionproject',
+    'mypage',
+    'portfolio',
+    'requests',
+    'review',
 ]
 
 MIDDLEWARE = [
