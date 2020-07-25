@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'accounts',
     'chat',
     'estimates',
-    'heajo',
     'lionproject',
     'mypage',
     'portfolio',
