@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'portfolio',
     'requests',
     'review',
-    'home',
 ]
 
 MIDDLEWARE = [
