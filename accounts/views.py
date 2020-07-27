@@ -32,7 +32,7 @@ def login(request):
     if request.method == 'POST':
         if(request.POST['username'] and request.POST['password']):
 
-            user = authenticate(
+            user = auth.authenticate(
                 request,
                 username=request.POST['username'],
                 password=request.POST['password'],
@@ -40,7 +40,7 @@ def login(request):
 
             if user is not None:
                 auth.login(request, user)
-                return redirect('home/index.html')
+                return redirect('home')
             else:
                 context['error'] = "로그인 정보를 확인해주세요."
         
@@ -53,4 +53,4 @@ def logout(request):
     if request.method == 'POST':
         auth.logout(request)
 
-    return redirect("home/index.html")
+    return redirect('home')

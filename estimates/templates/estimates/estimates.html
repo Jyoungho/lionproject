@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if user_info.user_type == 'R' %}
+    <title>받은 견적서: 철거해조</title>
+    {% elif user_info.user_type == 'P' %}
+    <title>보낸 견적서: 철거해조</title>
+    {% endif %}
+{% endblock %}
+
+{% load static %}
+
+{% block sytle %}
+{% endblock %}
+ 
+{% block content %}
+    <header class="bg-primary text-white">
+        <div class="container text-center">
+            {% if user_info.user_type == 'R' %}
+                <h1>받은 견적서</h1>
+            {% elif user_info.user_type == 'P' %}
+                <h1>보낸 견적서</h1>
+            {% endif %}
+        </div>
+    </header>
+
+    {% if estimates %}
+    {% for estimate in estimates %}
+        <div class="container">
+            <div class="row">
+                <div class="card" style="width: 18rem;">
+                    <img src="..." class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ estimate.title }}</h5>
+                        <p class="card-text">{{ estimate.cont }}</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% else %}
+    <section id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    {% if user_info.user_type == 'R' %}
+                        <h2>아직 받은 견적서가 없습니다</h2>
+                        <a href="#" class="btn btn-primary">어디로가지</a>
+                    {% elif user_info.user_type == 'P' %}
+                        <h2>아직 보낸 견적서가 없습니다</h2>
+                        <a href="#" class="btn btn-primary">내 주변 요청서 둘러보기</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    
+{% endblock %}
