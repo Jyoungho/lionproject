@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block title %}
+  <title>MyPage:철거해줘</title>
+{% endblock %}
+
+{% load static %}
+
+{% block sytle %}
+{% endblock %}
+ 
+{% block content %}
+  
+<section id="mypage">
+    {%if error%}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+    {%endif%}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <h1>mypage</h1>
+
+                <div class="form-group">
+                    <h2>index</h2>
+                    <h2>{{user.username}}</h2>
+                    <h2><a href=" /mypage/{{user.id }}">마이페이지이동</a></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
