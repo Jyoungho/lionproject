@@ -5,8 +5,9 @@ from django.contrib import auth
 
 # Create your views here.
 def signup(request):
-    context = {}
 
+    context = {}
+    
     #POST method
     if request.method == 'POST':
         if(request.POST['username'] and
@@ -34,8 +35,8 @@ def signup(request):
     return render(request, 'accounts/signup.html', context)
 
 def login(request):
+    
     context = {}
-
     #POST Method
     if request.method == 'POST':
         if(request.POST['user'] and request.POST['password']):
@@ -55,6 +56,9 @@ def login(request):
         else:
             context['error'] = "로그인 정보를 확인해주세요."
 
+        # 아래 두 줄 꼭 기입하고 return시 context로 전달하기
+        user_extend = User_extend.objects.get(user=request.user)  
+        context = {'user_extend' : user_extend,}
     return render(request, 'accounts/login.html', context)
 
 def logout(request):
@@ -62,3 +66,8 @@ def logout(request):
         auth.logout(request)
 
     return redirect('home:home')
+
+def mypage(request, user_id):
+    user = User.objects.get(id=user_id)
+    context = { 'user': user}
+    return render(request, 'accounts/mypage.html', context)
