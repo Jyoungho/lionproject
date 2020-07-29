@@ -69,5 +69,21 @@ def logout(request):
 
 def mypage(request, user_id):
     user = User.objects.get(id=user_id)
-    context = { 'user': user}
+    context = {'user':user}
     return render(request, 'accounts/mypage.html', context)
+
+
+def exchange(request):
+    user_extend = User_extend.objects.get(user=request.user)
+    if user_extend.user_type == 'R':
+        if user_extend.ptr_join_yn == 'Y':
+            user_extend.user_type = 'P'
+            user_extend.save()
+        else:
+            context = {}
+            context['error'] = '파트너로 가입해주세요'
+            return render(request, 'accounts/signup.html', context)
+    else:
+        user_extend.user_type = 'R'
+        user_extend.save()
+    return redirect('home:home')
