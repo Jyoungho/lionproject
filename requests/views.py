@@ -2,6 +2,6 @@ from django.shortcuts import render
 
 # Create your views here.
 
-def index(request):
+def requests(request):
     context = {}
-    render(requset, 'requests/index.html', context)
+    render(request, 'requests/index.html', context)
