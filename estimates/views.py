@@ -58,7 +58,7 @@ def detail(request, estimate_id):
 def new(request):
     user_extend = User_extend.objects.get(user=request.user)
     if user_extend.user_type == 'R':
-        return redirect('home')
+        return redirect('home:home')
     else:
         return render(request, 'estimates/new.html')
 
@@ -81,7 +81,7 @@ def edit(request, estimate_id):
     try:
         estimate = Estimate.objects.get(id=estimate_id, ptr_username=request.user)
     except Estimate.DoesNotExist:
-        return redirect('home')
+        return redirect('home:home')
     
     # POST 방식일때
     if request.method == 'POST':
@@ -104,6 +104,6 @@ def delete(request, estimate_id):
     try:
         estimate = Estimate.objects.get(id=estimate_id, ptr_username=request.user)
     except Estimate.DoesNotExist:
-        return redirect('home')
+        return redirect('home:home')
     estimate.delete()
     return redirect('estimates:list') # estimate_id 추가 필요
