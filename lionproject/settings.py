@@ -86,8 +86,12 @@ WSGI_APPLICATION = 'lionproject.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'haejo',
+        'USER': 'haejo',
+        'PASSWORD': 'likelion123',
+        'HOST': 'lionproject-haejo.crs8zq2zcvbn.ap-northeast-2.rds.amazonaws.com',
+        'PORT' : 5432,
     }
 }
 
