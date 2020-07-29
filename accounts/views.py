@@ -68,10 +68,9 @@ def logout(request):
     return redirect('home:home')
 
 def mypage(request, user_id):
-    user = User.objects.get(id=user_id)
-    context = {'user':user}
+    user_extend = User_extend.objects.get(user=request.user)
+    context = {'user_extend': user_extend}
     return render(request, 'accounts/mypage.html', context)
-
 
 def exchange(request):
     user_extend = User_extend.objects.get(user=request.user)

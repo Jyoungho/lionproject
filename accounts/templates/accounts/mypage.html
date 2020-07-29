@@ -1,43 +1,58 @@
 {% extends "base.html" %}
 
 {% block title %}
-  <title>MyPage:철거해줘</title>
+<title>MyPage:철거해줘</title>
 {% endblock %}
 
 {% load static %}
 
 {% block sytle %}
 {% endblock %}
- 
+
 {% block content %}
-  
+
 <section id="mypage">
     <!--{%if error%}
         <div class="alert alert-danger" role="alert">
             {{error}}
         </div>
     {%endif%}-->
-
+    {% if user %}
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
                 <h1>Mypage Detail</h1>
-
-                {% if user %}
-                    <div class="container">
-                        <h2>ID</h2>
-                        <h2>{{ user.user_extend.id }}</h2>
-                        <h2>{{ user.user_extend.actv_area}}</h2>
-                    </div>
-                {% else %}
-                    <div class="container">
-                        <h2>등록된 유저가 없습니다.</h2>
-                    </div>
-                {% endif %}
+            </div>
+            <div class="col-lg-8 mx-auto">
+                <h3>ID</h3>
+                <p>{{ user.username }}</p>
+            </div>
+            <!--파트너: 전화번호, 활동지역, 업종, 서비스가능지역--> 
+            <div class="col-lg-8 mx-auto">
+                <h3>전화번호</h3>
+                <p>{{ user_extend.tel }}</p>
+            </div>
+            <div class="col-lg-8 mx-auto">
+                <h3>활동지역</h3>
+                <p>{{ user_extend.actv_area }}</p>
+            </div>
+            <div class="col-lg-8 mx-auto">
+                <h3>업종</h3>
+                <p>{{ user_extend.svc_cd }}</p>
+            </div>
+            <div class="col-lg-8 mx-auto">
+                <h3>서비스가능지역</h3>
+                <p>{{ user_extend.work_spc_kind }}</p>
             </div>
         </div>
     </div>
+    {% else %}
+    <div class="container">
+        <h2>등록된 유저가 없습니다.</h2>
+    </div>
+    {% endif %}
+
+
 </section>
 
 {% endblock %}
-
