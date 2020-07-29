@@ -7,6 +7,7 @@ class User_extend(models.Model):
     tel = models.CharField(max_length=15, null=False)
     prof_img = models.ImageField(upload_to='profile', null=True)
     ptr_join_yn = models.CharField(max_length=1, null=False)
+    biz_nm = models.CharField(max_length=200, null=True)
     actv_area = models.CharField(max_length=100, null=False)
     svc_cd = models.CharField(max_length=6, null=False)
     work_spc_kind = models.CharField(max_length=20, null=False)
