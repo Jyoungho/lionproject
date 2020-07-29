@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if user_extend.user_type == 'R' %}
+    <title>(업체명): 철거해조</title>
+    {% elif user_extend.user_type == 'P' %}
+    <title>나의 포트폴리오: 철거해조</title>
+    {% endif %}
+{% endblock %}
+
+{% load static %}
+{% block sytle %}
+    <link rel="stylesheet" href="{% static 'estimates/style.css' %}" type="text/css" />
+{% endblock %}
+ 
+{% block content %}
+        <div class="container text-center">
+            {% if user_extend.user_type == 'R' %}
+                <h1>받은 견적서</h1>
+            {% elif user_extend.user_type == 'P' %}
+                <h1>보낸 견적서</h1>
+            {% endif %}
+        </div>
+{% endblock %}
