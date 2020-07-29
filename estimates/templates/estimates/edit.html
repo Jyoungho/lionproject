@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>견적서 수정: 철거해조</title>
+{% endblock %}
+
+{% load static %}
+{% block sytle %}
+    <link rel="stylesheet" href="{% static 'estimates/style.css' %}" type="text/css" />
+{% endblock %}
+ 
+{% block content %}
+  
+<section id="new">
+    <div class="container">
+        <div class="row">   
+            <div class="col-lg-8 mx-auto">
+                <form method="POST" action="{% url 'estimates:edit' estimate.id %}">
+                    {% csrf_token %}
+
+                    <h2>견적서 보내기</h2>
+
+                    <!--견적서 제목-->
+                    <div class="form-group">
+                        <label class="label" for="title">제목</label>
+                        <input class="form-control" type="text" id="title" name="title" value="{{ estimate.title }}">
+                    </div>
+
+                    <!--예상 견적 금액-->
+                    <div class="form-group">
+                        <label class="label" for="price">예상 견적 금액</label>
+                        <input class="form-control" type="number" id="price" name="price" value="{{ estimate.price }}">
+                    </div>
+
+                    <!--상세 내용-->
+                    <div class="form-group">
+                        <label for="cont">추가 내용</label>
+                        <textarea class="form-control" id="cont" rows="3" name="cont">{{ estimate.cont }}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mb-4">수정하기</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

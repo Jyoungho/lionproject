@@ -21,9 +21,8 @@
   <!-- Custom styles for this template -->
   <link href="{% static 'lionproject/css/scrolling-nav.css' %}" rel="stylesheet">
 
-
-
   {% block sytle %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" />
   {% endblock %}
 
 </head>
@@ -33,12 +32,36 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
     <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">철거해조(아이콘)</a>
+      <a class="navbar-brand js-scroll-trigger" href="{% url 'home:home' %}">철거해조(아이콘)</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
+
+        <!--로그인 했을 때-->
+        {% if user.is_authenticated %}
+          <!--요청자로 로그인 했을 때-->
+          {% if user_extend.user_type == 'R' %}
+          <li class="nav-item">
+            <a class="nav-link login-menu" href="{% url 'estimates:list' %}">받은 견적서</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link login-menu" href="#services">요청서 둘러보기</a>
+          </li>
+
+          <!--파트너로 로그인 했을 때-->
+          {% elif user_extend.user_type == 'P' %}
+          <li class="nav-item">
+            <a class="nav-link login-menu" href="{% url 'estimates:list' %}">보낸 견적서</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link login-menu" href="#services">요청서 둘러보기</a>
+          </li>
+          {% endif %}
+
+        <!--로그인 안했을 때-->
+        {% else %}
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#about">게시판</a>
           </li>
@@ -48,18 +71,40 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#contact">이건또뭐였지</a>
           </li>
+        {% endif %}
 
           <!--로그인/로그아웃 뭐 이런 정보를 만들어볼게요?????-->
           <li class="nav-item">
             {% if user.is_authenticated %}
               <div class="container">
-                <form action="{% url 'accounts:logout' %}" method="POST">
-                  {% csrf_token %}
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+                      {{ user.get_username }}님 안녕하세요
+                    </button>
 
-                  <a href="/accounts/{{user.id}}">{{ user.get_username }}</a>
-                  <button type="submit" class="btn btn-primary">Logout</button>
-                  
-                </form>
+                    <!--Dropdown menu-->
+                    <div class="dropdown-menu dropdown-menu-lg-right">
+                      <a class="dropdown-item" href="#">My Page</a>
+                      {% if user_extend.user_type == 'R' %}
+                        <a class="dropdown-item" href="#">요청서 작성</a>
+                        <a class="dropdown-item" href="#">파트너로 전환</a>
+                        {% comment %} <form action="{% url 'accounts:exchange' %}" method="POST">
+                          {% csrf_token %}
+                          <button class="dropdown-item" type="submit">파트너로 전환</button>
+                        </form> {% endcomment %}
+                      
+                      {% elif user_extend.user_type == 'P' %}
+                        <a class="dropdown-item" href="#">포트폴리오 작성</a>
+                        <a class="dropdown-item" href="#">파트너로 전환</a>
+                      {% endif %}
+                      
+                      <div class="dropdown-divider"></div>
+                      <form action="{% url 'accounts:logout' %}" method="POST">
+                        {% csrf_token %}
+                        <button class="dropdown-item" type="submit">Logout</button>
+                      </form>
+                    </div>
+                  </div>
               </div>
 
             {% else %}
@@ -86,7 +131,7 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">Copyright &copy; Your Website 2020</p>
+      <p class="m-0 text-center text-white">Copyright &copy;  haejo 2020</p>
     </div>
     <!-- /.container -->
   </footer>

@@ -1,61 +1,186 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {% if user_info.user_type == 'R' %}
+    {% if user_extend.user_type == 'R' %}
     <title>받은 견적서: 철거해조</title>
-    {% elif user_info.user_type == 'P' %}
+    {% elif user_extend.user_type == 'P' %}
     <title>보낸 견적서: 철거해조</title>
     {% endif %}
 {% endblock %}
 
 {% load static %}
-
 {% block sytle %}
+    <link rel="stylesheet" href="{% static 'estimates/style.css' %}" type="text/css" />
 {% endblock %}
  
 {% block content %}
     <header class="bg-primary text-white">
         <div class="container text-center">
-            {% if user_info.user_type == 'R' %}
+            {% if user_extend.user_type == 'R' %}
                 <h1>받은 견적서</h1>
-            {% elif user_info.user_type == 'P' %}
+            {% elif user_extend.user_type == 'P' %}
                 <h1>보낸 견적서</h1>
             {% endif %}
         </div>
     </header>
 
     {% if estimates %}
-    {% for estimate in estimates %}
-        <div class="container">
-            <div class="row">
-                <div class="card" style="width: 18rem;">
-                    <img src="..." class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ estimate.title }}</h5>
-                        <p class="card-text">{{ estimate.cont }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+        <!-- 요청자로 로그인 시 : 파트너 업체명, 가격 노출-->
+        {% if user_extend.user_type == 'R' %}        
+            <div class="container">
+                <div class="row">
+
+                    {% for estimate in estimates %}
+                        <div class="card" style="width: 100%; margin: 20px;">             
+                            <div class="card">
+                                <a href="#"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
+                                    <div class="card-header">
+                                        {{ estimate.req_id.title }}
+                                    </div>
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ user_extend.biz_nm }}</h5>
+                                    <p class="card-text">예상 견적 금액 : {{ estimate.price }} 만원</p>
+                                    <p class="card-text">{{ estimate.cont }}</p>
+                                    {% comment %} <a href="{% url 'estimates:detail' estimate.id %}" class="btn btn-link">..more</a> {% endcomment %}
+                                    <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalLong" data-id="{{ estimate }}">
+                                        ..more
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">{{ estimate.title }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h2>{{ estimate.id }}</h2>
+                                                    <h4>{{ user_extend.biz_nm }}</h4>
+
+                                                    <div>
+                                                        <p>예상 견적<p>
+                                                        <p>{{ estimate.price }}</p>
+                                                    </div>
+
+                                                    <div>
+                                                        <p>상세 내용<p>
+                                                        <p>{{ estimate.cont }}</p>
+                                                    </div>
+                                                            
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">채팅하기</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                            
+                                
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>        
+            </div>
+        <!-- 파트너로 로그인 시 : 연결된 요청서, 가격, RUD링크 노출-->
+        {% elif user_extend.user_type == 'P' %}
+            <div class="container">
+                <div class="row">
+
+                    {% for estimate in estimates %}
+                        <div class="card" style="width: 100%; margin: 20px;">   
+                            <div class="card">
+                                <a href="#"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
+                                    <div class="card-header">
+                                        {{ estimate.req_id.title }}
+                                    </div>
+                                </a>
+                                <div class="card-body">
+                                    <h5 class="card-title">{{ user_extend.biz_nm }}</h5>
+                                    <p class="card-text">예상 견적 금액 : {{ estimate.price }} 만원</p>
+                                    <p class="card-text">{{ estimate.cont }}</p>
+                                    <a href="{% url 'estimates:detail' estimate.id %}" class="btn btn-link">..more</a>
+                                    {% comment %} <!-- Button trigger modal -->
+                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalLong" data-id="{{ estimate }}">
+                                        ..more
+                                    </button>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLongTitle">{{ estimate.title }}</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <h2>{{ estimate.id }}</h2>
+                                                    <h4>관련 요청서 : {{ estimate.req_id.title }}</h4>
+
+                                                    <div>
+                                                        <p>예상 견적<p>
+                                                        <p>{{ estimate.price }}</p>
+                                                    </div>
+
+                                                    <div>
+                                                        <p>상세 내용<p>
+                                                        <p>{{ estimate.cont }}</p>
+                                                    </div>
+                                                            
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">수정</button>
+                                                    <button type="button" class="btn btn-primary">삭제</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- end Modal --> {% endcomment %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>    
+        {% endif %}
+{% comment %}     
+    <script>
+            $(document).on('show.bs.modal', function (e) { 
+            var estimate = $((e.relatedTarget).data('id'); 
+            // $(".modal-body #bookId").val( estimate ); 
+            // As pointed out in comments, 
+            // it is superfluous to have to manually call the modal. 
+            // $('#addBookDialog').modal('show'); });
+    </script> {% endcomment %}
+        
+
+
+    <!-- 견적서가 없을 경우 -->
+    {% else %} 
+        <section id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        {% if user_extend.user_type == 'R' %}
+                            <h2>아직 받은 견적서가 없습니다</h2>
+                            <a href="#" class="btn btn-primary">어디로가지</a>
+                        {% elif user_extend.user_type == 'P' %}
+                            <h2>아직 보낸 견적서가 없습니다</h2>
+                            <a href="#" class="btn btn-primary">내 주변 요청서 둘러보기</a>
+                        {% endif %}
                     </div>
                 </div>
             </div>
-        </div>
-    {% endfor %}
-
-    {% else %}
-    <section id="about">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 mx-auto">
-                    {% if user_info.user_type == 'R' %}
-                        <h2>아직 받은 견적서가 없습니다</h2>
-                        <a href="#" class="btn btn-primary">어디로가지</a>
-                    {% elif user_info.user_type == 'P' %}
-                        <h2>아직 보낸 견적서가 없습니다</h2>
-                        <a href="#" class="btn btn-primary">내 주변 요청서 둘러보기</a>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
-    </section>
+        </section>
     {% endif %}
-    
+
+
 {% endblock %}

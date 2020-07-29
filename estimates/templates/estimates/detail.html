@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if user_extend.user_type == 'R' %}
+        <title>받은 견적서: 철거해조</title>
+    {% elif user_extend.user_type == 'P' %}
+        <title>보낸 견적서: 철거해조</title>
+    {% endif %}
+{% endblock %}
+
+{% load static %}
+{% block sytle %}
+    <link rel="stylesheet" href="{% static 'estimates/style.css' %}" type="text/css" />
+{% endblock %}
+ 
+{% block content %}
+<section id="detail">
+    <div class="container">
+        <div class="row">   
+            <div class="col-lg-8 mx-auto">
+                <h3>{{ estimate.title }}</h3>
+                <br>               
+                <div>
+                    <ul>
+                        <li><h5>업체명</h5></li>
+                            <p>{{ user_extend.biz_nm }}</p>
+                        <li><h5>예상 견적 금액</h5></li>
+                            <p>{{ estimate.price }}</p>
+                        <li><h5>상세 내용</h5></li>
+                            <p>{{ estimate.cont }}</p>
+                    </ul>
+                </div>
+                
+                <a href="#">요청서로 이동</a>
+                {% comment %} <a href="{% url 'requests:detail' request_id %}">요청서로 이동</a> {% endcomment %}
+                <br>
+                {% if user_extend.user_type == 'R' %}
+                    <a href="{% url '' estimate.id %}"><button type="button" class="btn btn-primary">채팅하기</button>
+                {% elif user_extend.user_type == 'P' %}
+                <div class="text-right">
+                    <a href="{% url 'estimates:edit' estimate.id %}"><button type="button" class="btn btn-primary">수정</button>
+                    <a href="{% url 'estimates:delete' estimate.id %}"><button type="button" class="btn btn-secondary">삭제</button>
+                </div>
+                {% endif %}
+                    
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
