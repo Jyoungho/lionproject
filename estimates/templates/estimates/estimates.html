@@ -39,10 +39,13 @@
                                     </div>
                                 </a>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ user_extend.biz_nm }}</h5>
+                                    <!--파트너 업체명 클릭 시 파트너 포트폴리오로 이동-->
+                                    <a href="{% url 'portfolio:list_forR' estimate.id %}">
+                                        <h5 class="card-title">{{ estimate.ptr_username.user_extend.biz_nm }}</h5>
+                                    </a>
                                     <p class="card-text">예상 견적 금액 : {{ estimate.price }} 만원</p>
                                     <p class="card-text">{{ estimate.cont }}</p>
-                                    {% comment %} <a href="{% url 'estimates:detail' estimate.id %}" class="btn btn-link">..more</a> {% endcomment %}
+                                    <a href="{% url 'estimates:detail' estimate.id %}" class="btn btn-link">..more</a>
                                     <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalLong" data-id="{{ estimate }}">
                                         ..more
@@ -80,7 +83,7 @@
                                             </div>
                                         </div>
                                     </div>                            
-                                
+                                    <!-- End Modal -->
                                 </div>
                             </div>
                         </div>
@@ -101,7 +104,7 @@
                                     </div>
                                 </a>
                                 <div class="card-body">
-                                    <h5 class="card-title">{{ user_extend.biz_nm }}</h5>
+                                    {% comment %} <h5 class="card-title">{{ user_extend.biz_nm }}</h5> {% endcomment %}
                                     <p class="card-text">예상 견적 금액 : {{ estimate.price }} 만원</p>
                                     <p class="card-text">{{ estimate.cont }}</p>
                                     <a href="{% url 'estimates:detail' estimate.id %}" class="btn btn-link">..more</a>
