@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {% if user_extend.user_type == 'R' %}
+    <title>{{ portfolio.ptr_username.user_extend.biz_name }}: 철거해조</title>
+    {% elif user_extend.user_type == 'P' %}
+    <title>나의 포트폴리오: 철거해조</title>
+    {% endif %}
+{% endblock %}
+
+{% load static %}
+{% block sytle %}
+    <link rel="stylesheet" href="{% static 'portfolio/style.css' %}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+<section id="detail">
+    <div class="container">
+        <div class="row">   
+            <div class="col-lg-8 mx-auto">
+                <div class="row"> 
+                    <div class="col-8">
+                        <h3>{{ portfolio.title }}</h3>
+                    </div>
+                    <div class="col text-right">
+                        <small class="text-muted text-right">작업일(YYYY.MM)</small>
+                    </div>
+                </div>
+                <br>
+                <!--이미지 추가(카드 형식)-->  
+                             
+                <div>
+                    <ul>
+                        <li><h5>작업 지역</h5></li>
+                            <p></p>
+                        <li><h5>작업 공간 유형</h5></li>
+                            <p></p>
+                        <li><h5>상세 내용</h5></li>
+                            <p></p>
+                    </ul>
+                </div>
+                
+                <br>
+                {% if user_extend.user_type == 'R' %}
+                    {% comment %} <a href="{% url '' estimate.id %}"><button type="button" class="btn btn-primary">채팅하기</button> {% endcomment %}
+                    <a href=""><button type="button" class="btn btn-primary">채팅하기</button>
+                
+                
+                {% elif user_extend.user_type == 'P' %}
+                    <!-- 포트폴리오 작성자만 수정, 삭제 -->
+                    {% if user == portfolio.ptr_username %}
+                        <div class="text-right">
+                            <a href="{% url 'portfolio:edit' estimate.id %}"><button type="button" class="btn btn-outline-secondary">수정 <i class="fas fa-eraser fa-lg"></i></button></a>
+
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
+                                삭제 <i class="fas fa-trash-alt fa-lg"></i>
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body text-left">
+                                        해당 포트폴리오를 삭제하시겠습니까?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">아니요</button>
+                                        <a href="{% url 'portfolio:delete' portfolio.id %}"><button type="button" class="btn btn-primary">예</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <!-- End Modal -->
+                        </div>
+                    {% endif %}
+                {% endif %}
+            
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
