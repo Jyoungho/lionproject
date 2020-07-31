@@ -22,6 +22,7 @@ class Portfolio(models.Model):
 class Image(models.Model):
     portfolio_id = models.ForeignKey(Portfolio, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='portfolio')
+    main_yn = models.CharField(max_length=1, null=False, default='N')
     
     def __str__(self):
         return f'{self.portfolio_id} : {self.image}'
