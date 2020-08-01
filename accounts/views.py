@@ -83,34 +83,9 @@ def exchange(request):
     return redirect('home:home')
 
 def partner(request):
-    context = {}
     
-    #POST method
-    if request.method == 'POST':
-        if(request.POST['username'] and
-                request.POST['password'] and
-                request.POST['password'] == request.POST['password_check']):
 
-            user = User.objects.create_user(
-                username=request.POST['username'],
-                password=request.POST['password'],
-            )
-            tel=request.POST['tel'] #전화번호
-            actv_area=request.POST['actv_area'] #활동지역
-            svc_cd=request.POST['svc_cd'] #서비스업종
-            work_spc_kind=request.POST['work_spc_kind'] #작업가능공간종류
-
-            new_user = User_extend(user=user, tel=tel, actv_area=actv_area, svc_cd=svc_cd, work_spc_kind=work_spc_kind)
-            new_user.save() #세이브까지!
-
-            auth.login(request, user)
-            return redirect('home:home')
-        else:
-            context['error'] = '정보를 확인해주세요.'
-
-    #GET Method
-
-    return render(request, 'accounts/signup/partner.html', context)
+    return render(request, 'accounts/signup/partner.html')
 
 def requester(request):
 
