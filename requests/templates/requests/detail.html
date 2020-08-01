@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+  <title>요청 상세!!</title>
+{% endblock %}
+
+{% load static %}
+
+{% block sytle %}
+{% endblock %}
+
+
+{% block content %}
+
+<header class="bg-primary text-white">
+  <div class="container text-center">
+    <h1>요청할거야!!!</h1>
+    <p class="lead">What?</p>
+  </div>
+</header>
+
+<section class = 'col-lg-8 mx-auto'>
+  <h2>상세페이지</h2>
+  {% if req %}
+  <div><h3>작성자</h3>
+    <p>{{req.reqr_username}}</p>
+  </div>
+  <p>------------------------</p>
+  <div><h3>제목</h3>
+    <p>{{req.title}}</p>
+  </div>
+  <p>------------------------</p>
+  <div><h3>본문</h3>
+      <p>{{req.cont}}</p>
+  </div>
+  <p>------------------------</p>
+  <div><h3>일하는 구역</h3>
+    <p>{{req.req_area}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>분야
+    <p>{{req.svc_cd}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>작업종류
+    <p>{{req.work_spc_kind}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>엘레베이터 여부
+    <p>{{req.elev_psb_yn}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>크기
+    <p>{{req.size}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>층수
+    <p>{{req.floor}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>요청일 시작
+    <p>{{req.req_exp_stt_dt}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>요청일 만료
+    <p>{{req.req_exp_end_dt}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>작얼일 시작
+    <p>{{req.work_stt_dt}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>작업일 종료
+    <p>{{req.work_end_dt}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>게시일
+    <p>{{mod_dtti}}</p>
+  </div>
+  {% endif %}
+  
+</section>
+{% endblock %}
+
