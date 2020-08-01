@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  <title>회원가입:철거해줘</title>
+  <title>파트너회원가입:철거해줘</title>
 {% endblock %}
 
 {% load static %}
@@ -11,7 +11,7 @@
  
 {% block content %}
   
-<section id="signup">
+<section id="signup_partner">
     {%if error%}
         <div class="alert alert-danger" role="alert">
             {{error}}
@@ -21,15 +21,21 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <form method="POST" action="{% url 'accounts:partner' %}">
+                <form method="POST" action="{% url 'accounts:signup_partner' %}">
                     {% csrf_token %}
 
-                    <h1>회원가입</h1>
+                    <h1>파트너 회원가입</h1>
 
                     <!--공통: ID(email)만 입력 가능-->
                     <div class="form-group">
                         <label class="label" for="username">ID(Email)</label>
                         <input class="form-control" type="email" id="username" name="username" placeholder="email 입력">
+                    </div>
+
+                    <!--공통: 닉네임-->
+                    <div class="form-group">
+                        <label class="label" for="nickname">ID(Email)</label>
+                        <input class="form-control" type="text" id="nickname" name="nickname" placeholder="닉네임 입력">
                     </div>
 
                     <!--공통: 패스워드-->
@@ -44,7 +50,7 @@
                         <input class="form-control" type="password" id="password_check" name="password_check">
                     </div>
 
-                    <!--파트너: 전화번호-->
+                    <!--공통: 전화번호-->
                     <div class="form-group">
                         <label class="label" for="tel">전화번호</label>
                         <input class="form-control" type="text" id="tel" name="tel" placeholder="01000000000">
@@ -64,7 +70,7 @@
 
                     <!--파트너: 작업가능공간종류-->
                     <div class="form-group">
-                        <label class="label" for="work_spc_kind">작업공간종류....? 뭐였지 이거</label>
+                        <label class="label" for="work_spc_kind">작업공간종류</label>
                         <input class="form-control" type="text" id="work_spc_kind" name="work_spc_kind" placeholder="드롭다운변경, 아이디검토">
                     </div>
 

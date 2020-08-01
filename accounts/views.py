@@ -5,6 +5,10 @@ from django.contrib import auth
 
 # Create your views here.
 def signup(request):
+    #GET Method
+    return render(request, 'accounts/signup.html')
+
+def signup_partner(request):
 
     context = {}
     
@@ -18,13 +22,53 @@ def signup(request):
                 username=request.POST['username'],
                 password=request.POST['password'],
             )
+            nickname=request.POST['nickname'] #닉네임
             tel=request.POST['tel'] #전화번호
             actv_area=request.POST['actv_area'] #활동지역
             svc_cd=request.POST['svc_cd'] #서비스업종
             work_spc_kind=request.POST['work_spc_kind'] #작업가능공간종류
+            user_type='P'
+            ptr_join_yn='Y'
 
-            new_user = User_extend(user=user, tel=tel, actv_area=actv_area, svc_cd=svc_cd, work_spc_kind=work_spc_kind)
+            new_user = User_extend(user=user, nickname=nickname, tel=tel, actv_area=actv_area, svc_cd=svc_cd, work_spc_kind=work_spc_kind, user_type=user_type, ptr_join_yn=ptr_join_yn)
             new_user.save() #세이브까지!
+
+            auth.login(request, user)
+            return redirect('home:home')
+        else:
+            context['error'] = '정보를 확인해주세요.'
+
+    #GET Method
+    return render(request, 'accounts/signup.html', context)
+
+def signup_requester(request):
+    
+    context = {}
+    
+    #POST method
+    if request.method == 'POST':
+        if(request.POST['username'] and
+                request.POST['password'] and
+                request.POST['password'] == request.POST['password_check']):
+
+            user = User.objects.create_user(
+                username=request.POST['username'],
+                password=request.POST['password'],
+            )
+            nickname=request.POST['nickname'] #닉네임
+            tel=request.POST['tel'] #전화번호
+            print('##################전화번호까지')
+            actv_area='N' #활동지역
+            svc_cd='N' #서비스업종
+            work_spc_kind='N'
+            user_type='R'
+            ptr_join_yn='N'
+            print("#####################데이터입력")
+
+            new_user = User_extend(user=user, nickname=nickname, tel=tel, actv_area=actv_area, svc_cd=svc_cd, work_spc_kind=work_spc_kind, user_type=user_type, ptr_join_yn=ptr_join_yn)
+            print('####################DATA 저장')
+            new_user.save() #세이브까지!
+            print('####################SAVE')
 
             auth.login(request, user)
             return redirect('home:home')
@@ -84,8 +128,8 @@ def exchange(request):
 
 def partner(request):
     
-
-    return render(request, 'accounts/signup/partner.html')
+    #GET Method
+    return render(request, 'accounts/partner.html')
 
 def requester(request):
 
