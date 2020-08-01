@@ -4,4 +4,4 @@ from django.shortcuts import render
 
 def requests(request):
     context = {}
-    render(request, 'requests/index.html', context)
+    return render(request, 'requests/requests.html', context)
