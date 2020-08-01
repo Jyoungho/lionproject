@@ -106,4 +106,4 @@ def delete(request, estimate_id):
     except Estimate.DoesNotExist:
         return redirect('home:home')
     estimate.delete()
-    return redirect('estimates:list') # estimate_id 추가 필요
+    return redirect('estimates:list')

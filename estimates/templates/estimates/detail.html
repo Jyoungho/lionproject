@@ -35,12 +35,39 @@
                 {% comment %} <a href="{% url 'requests:detail' request_id %}">요청서로 이동</a> {% endcomment %}
                 <br>
                 {% if user_extend.user_type == 'R' %}
-                    <a href="{% url '' estimate.id %}"><button type="button" class="btn btn-primary">채팅하기</button>
+                    {% comment %} <a href="{% url '' estimate.id %}"><button type="button" class="btn btn-primary">채팅하기</button> {% endcomment %}
+                    <a href=""><button type="button" class="btn btn-primary">채팅하기</button>
+                
+                
                 {% elif user_extend.user_type == 'P' %}
-                <div class="text-right">
-                    <a href="{% url 'estimates:edit' estimate.id %}"><button type="button" class="btn btn-primary">수정</button>
-                    <a href="{% url 'estimates:delete' estimate.id %}"><button type="button" class="btn btn-secondary">삭제</button>
-                </div>
+                    <!-- 견적서 작성자만 수정, 삭제 -->
+                    {% if user == estimate.ptr_username %}
+                        <div class="text-right">
+                            <a href="{% url 'estimates:edit' estimate.id %}"><button type="button" class="btn btn-outline-secondary">수정 <i class="fas fa-eraser fa-lg"></i></button></a>
+                            
+                            
+                            <!-- Button trigger modal -->
+                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
+                                삭제 <i class="fas fa-trash-alt fa-lg"></i>
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body text-left">
+                                        견적서를 삭제하시겠습니까?
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">아니요</button>
+                                        <a href="{% url 'estimates:delete' estimate.id %}"><button type="button" class="btn btn-primary">예</button>
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <!-- End Modal -->
+                        </div>
+                    {% endif %}
                 {% endif %}
                     
             </div>
