@@ -87,7 +87,7 @@
 
                       <!--Dropdown menu-->
                       <div class="dropdown-menu dropdown-menu-lg-right">
-                        <a class="dropdown-item" href="#">My Page</a>
+                        <a class="dropdown-item" href="{% url 'mypage:detail' user_extend.id%}">My Page</a>
                         <!--요청자로 로그인 했을 때-->
                         {% if user_extend.user_type == 'R' %}
                           <a class="dropdown-item" href="#">요청서 작성</a>
@@ -102,7 +102,7 @@
                           <form action="{% url 'accounts:exchange' %}" method="POST">
                             {% csrf_token %}
                             <button class="dropdown-item" type="submit">고객으로 전환</button>
-                          </form>-->
+                          </form>
                         {% endif %}
                       
                         <div class="dropdown-divider"></div>
