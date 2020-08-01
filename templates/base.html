@@ -21,6 +21,9 @@
   <!-- Custom styles for this template -->
   <link href="{% static 'lionproject/css/scrolling-nav.css' %}" rel="stylesheet">
 
+  <!-- Font Awesome 5 CDN-->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
+
   {% block sytle %}
     <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" />
   {% endblock %}
@@ -62,7 +65,7 @@
           <!--로그인 안했을 때-->
           {% else %}
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">게시판</a>
+              <a class="nav-link" href='/requests/'>게시판</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#services">이건뭐였지</a>
@@ -73,6 +76,7 @@
           {% endif %}
 
           <!--Dropdown Header-->
+          <!--로그인 했을 때-->
             <li class="nav-item">
               {% if user.is_authenticated %}
                 <div class="container">
@@ -83,24 +87,24 @@
 
                       <!--Dropdown menu-->
                       <div class="dropdown-menu dropdown-menu-lg-right">
-                        <a class="dropdown-item" href="{% url 'mypage:detail' user.user_extend.id%}">My Page</a>
+                        <a class="dropdown-item" href="#">My Page</a>
+                        <!--요청자로 로그인 했을 때-->
                         {% if user_extend.user_type == 'R' %}
                           <a class="dropdown-item" href="#">요청서 작성</a>
-                          {% comment %} <a class="dropdown-item" href="#">파트너로 전환</a> {% endcomment %}
-                          <!--<form action=# method="POST">
+                          <form action="{% url 'accounts:exchange' %}" method="POST">
                             {% csrf_token %}
                             <button class="dropdown-item" type="submit">파트너로 전환</button>
-                          </form>-->
-                        
+                          </form>
+
+                        <!--파트너로 로그인 했을 때-->
                         {% elif user_extend.user_type == 'P' %}
-                          <a class="dropdown-item" href="#">포트폴리오 작성</a>
-                          {% comment %} <a class="dropdown-item" href="#">고객으로 전환</a> {% endcomment %}
-                          <!--<form action=# method="POST">
+                          <a class="dropdown-item" href="{% url 'portfolio:list_forP' %}">나의 포트폴리오</a>
+                          <form action="{% url 'accounts:exchange' %}" method="POST">
                             {% csrf_token %}
                             <button class="dropdown-item" type="submit">고객으로 전환</button>
                           </form>-->
                         {% endif %}
-                        
+                      
                         <div class="dropdown-divider"></div>
                         <form action="{% url 'accounts:logout' %}" method="POST">
                           {% csrf_token %}
@@ -109,7 +113,7 @@
                       </div>
                     </div>
                 </div>
-
+              <!--로그인 안했을 때-->
               {% else %}
                 <div class="container">
                   <a href="{% url 'accounts:login' %}">
