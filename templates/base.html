@@ -1,0 +1,153 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+  {% block title %}
+  {% endblock %}
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <link rel = "stylesheet" href = "{% static 'style.css' %}" type = "text/css" />
+
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'lionproject/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link href="{% static 'lionproject/css/scrolling-nav.css' %}" rel="stylesheet">
+
+  {% block sytle %}
+    <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" />
+  {% endblock %}
+
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
+      <a class="navbar-brand js-scroll-trigger" href="{% url 'home:home' %}">철거해조(아이콘)</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav ml-auto">
+
+          <!--로그인 했을 때-->
+          {% if user.is_authenticated %}
+            <!--요청자로 로그인 했을 때-->
+            {% if user_extend.user_type == 'R' %}
+            <li class="nav-item">
+              <a class="nav-link login-menu" href="{% url 'estimates:list' %}">받은 견적서</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link login-menu" href="#services">요청서 둘러보기</a>
+            </li>
+
+            <!--파트너로 로그인 했을 때-->
+            {% elif user_extend.user_type == 'P' %}
+            <li class="nav-item">
+              <a class="nav-link login-menu" href="{% url 'estimates:list' %}">보낸 견적서</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link login-menu" href="#services">요청서 둘러보기</a>
+            </li>
+            {% endif %}
+
+          <!--로그인 안했을 때-->
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">게시판</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#services">이건뭐였지</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">이건또뭐였지</a>
+            </li>
+          {% endif %}
+
+          <!--Dropdown Header-->
+            <li class="nav-item">
+              {% if user.is_authenticated %}
+                <div class="container">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
+                        {{ user.get_username }}님 안녕하세요
+                      </button>
+
+                      <!--Dropdown menu-->
+                      <div class="dropdown-menu dropdown-menu-lg-right">
+                        <a class="dropdown-item" href="#">My Page</a>
+                        {% if user_extend.user_type == 'R' %}
+                          <a class="dropdown-item" href="#">요청서 작성</a>
+                          {% comment %} <a class="dropdown-item" href="#">파트너로 전환</a> {% endcomment %}
+                          <form action="{% url 'accounts:exchange' %}" method="POST">
+                            {% csrf_token %}
+                            <button class="dropdown-item" type="submit">파트너로 전환</button>
+                          </form>
+                        
+                        {% elif user_extend.user_type == 'P' %}
+                          <a class="dropdown-item" href="#">포트폴리오 작성</a>
+                          {% comment %} <a class="dropdown-item" href="#">고객으로 전환</a> {% endcomment %}
+                          <form action="{% url 'accounts:exchange' %}" method="POST">
+                            {% csrf_token %}
+                            <button class="dropdown-item" type="submit">고객으로 전환</button>
+                          </form>
+                        {% endif %}
+                        
+                        <div class="dropdown-divider"></div>
+                        <form action="{% url 'accounts:logout' %}" method="POST">
+                          {% csrf_token %}
+                          <button class="dropdown-item" type="submit">Logout</button>
+                        </form>
+                      </div>
+                    </div>
+                </div>
+
+              {% else %}
+                <div class="container">
+                  <a href="{% url 'accounts:login' %}">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </a>
+                  <li class="nav-item">
+                    <a href="{% url 'accounts:signup' %}">
+                      <button type="submit" class="btn btn-primary">SignUp</button>
+                    </a>
+                  </li>
+                </div>
+              {% endif %}
+            </li>
+        </ul>
+      </div>
+  </nav>
+
+  {% block content %}
+  {% endblock %}
+
+  <!-- Footer -->
+  <footer class="py-5 bg-dark">
+    <div class="container">
+      <p class="m-0 text-center text-white">Copyright &copy;  haejo 2020</p>
+    </div>
+    <!-- /.container -->
+  </footer>
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="{% static 'lionproject/vendor/jquery/jquery.min.js' %}"></script>
+  <script src="{% static 'lionproject/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="{% static 'lionproject/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
+
+  <!-- Custom JavaScript for this theme -->
+  <script src="{% static 'lionproject/js/scrolling-nav.js' %}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+
+{% block title %}
+  <title>로그인:철거해줘</title>
+{% endblock %}
+
+{% load static %}
+
+{% block sytle %}
+{% endblock %}
+ 
+{% block content %}
+  
+<section id="login">
+    {%if error%}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+    {%endif%}
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form method="POST" action="{% url 'accounts:login' %}">
+                    {% csrf_token %}
+
+                    <h1>로그인</h1>
+
+                    <!--공통: ID(email)만 입력 가능-->
+                    <div class="form-group">
+                        <label class="label" for="user">ID(Email)</label>
+                        <input class="form-control" type="email" id="user" name="user" placeholder="email 입력">
+                    </div>
+
+                    <!--공통: 패스워드-->
+                    <div class="form-group">
+                        <label class="label" for="password">Password</label>
+                        <input class="form-control" type="password" id="password" name="password">
+                    </div>
+                   
+                    <!--공통: 로그인버튼-->
+                    <button type="submit" class="btn btn-primary">로그인</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
