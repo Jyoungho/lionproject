@@ -23,5 +23,5 @@ urlpatterns = [
     path('estimates/', include('estimates.urls')),
     path('mypage/', include('mypage.urls')),
     path('requests/', include('requests.urls')),
-
+    path('portfolio/', include('portfolio.urls')),
 ]
