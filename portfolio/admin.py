@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Portfolio, Image
+from .models import Portfolio, Portfolio_img
 
 admin.site.register(Portfolio)
-admin.site.register(Image)
+admin.site.register(Portfolio_img)

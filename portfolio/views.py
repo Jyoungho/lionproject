@@ -4,11 +4,11 @@ from django.contrib.auth.models import User
 from accounts.models import User_extend
 from requests.models import Request
 from estimates.models import Estimate
-from .models import Portfolio, Image
+from .models import Portfolio, Portfolio_img
 
 @login_required
 def portfolioList_forR(request, estimate_id): # 파트너 클릭 시 파트너 정보 넘어옴(User ,User_extend)
-    main_images = Image.objects.none()
+    main_images = Portfolio_img.objects.none()
     # 현재 로그인 한 유저 정보 가져오기 (user_type이 필요)
     user_extend = User_extend.objects.get(user=request.user)
 
@@ -18,7 +18,7 @@ def portfolioList_forR(request, estimate_id): # 파트너 클릭 시 파트너 �
     # 그 파트너의 포트폴리오 리스트 가져오기
     portfolios = Portfolio.objects.filter(ptr_username=ptr_info.user)
     for portfolio in portfolios:
-        main_image = Image.objects.filter(portfolio_id=portfolio.id).filter(main_yn='Y')
+        main_image = Portfolio_img.objects.filter(portfolio_id=portfolio.id).filter(main_yn='Y')
         main_images = main_images.union(main_image)
     
     context = {
@@ -31,18 +31,16 @@ def portfolioList_forR(request, estimate_id): # 파트너 클릭 시 파트너 �
 
 
 def portfolioList_forP(request):
-    main_images = Image.objects.none()
+    main_images = Portfolio_img.objects.none()
     # 현재 로그인 한 유저 정보 가져오기 (user_type이 필요)
     user_extend = User_extend.objects.get(user=request.user)
     # 내 포트폴리오만 불러오기
     portfolios = Portfolio.objects.filter(ptr_username=request.user)
     for portfolio in portfolios:
-        main_image = Image.objects.filter(portfolio_id=portfolio.id).filter(main_yn='Y')
+        main_image = Portfolio_img.objects.filter(portfolio_id=portfolio.id).filter(main_yn='Y')
         main_images = main_images.union(main_image)
     
-    for test in main_images:
-        print(type(test))
-    
+       
     context = {
         'user_extend' : user_extend,
         'portfolios' : portfolios,
