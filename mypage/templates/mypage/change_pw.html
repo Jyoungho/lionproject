@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}
+<title>패스워드수정:철거해줘</title>
+{% endblock %}
+
+{% load static %}
+
+{% block sytle %}
+{% endblock %}
+
+{% block content %}
+
+<section id="mypage_change">
+    {%if error%}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+    {%endif%}
+    {% if user %}
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form method="POST" action="{% url 'mypage:change_pw' %}">
+                    {% csrf_token %}
+
+                    <h1>패스워드 변경</h1>
+
+                    <!--현재 패스워드-->
+                    <div class="form-group">
+                        <label class="label" for="origin_password">현재 패스워드</label>
+                        <input class="form-control" type="password" id="origin_password" name="origin_password">
+                    </div>
+
+                    <!--새로운 패스워드-->
+                    <div class="form-group">
+                        <label class="label" for="password1">새로운 패스워드</label>
+                        <input class="form-control" type="password" id="password1" name="password1">
+                    </div>
+
+                    <!--새로운 패스워드 확인-->
+                    <div class="form-group">
+                        <label class="label" for="password2">새로운 패스워드 확인</label>
+                        <input class="form-control" type="password" id="password2" name="password2">
+                    </div>
+
+                    <!--패스워드 수정하기 버튼-->
+                    <button type="submit" class="btn btn-primary">수정하기</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="container">
+        <h2>등록된 유저가 없습니다.</h2>
+    </div>
+    {% endif %}
+
+
+</section>
+
+{% endblock %}
