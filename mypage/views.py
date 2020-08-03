@@ -5,7 +5,7 @@ from .models import Mypage
 
 # Create your views here.
 
-def detail(request, user_id):
+def detail(request):
     user_extend = User_extend.objects.get(user=request.user)
     context = {'user_extend': user_extend}
     return render(request, 'mypage/detail.html', context)
