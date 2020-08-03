@@ -8,7 +8,7 @@ from .models import Estimate
 @login_required
 def estimatesList(request):
     context = {}
-    res_requests = Request.objects.none()
+    # res_requests = Request.objects.none()
     res_estimates = Estimate.objects.none()
     # 현재 로그인 한 유저 정보 가져오기 (user_type이 필요)
     user_extend = User_extend.objects.get(user=request.user)

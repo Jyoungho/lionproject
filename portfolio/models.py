@@ -8,7 +8,7 @@ def set_none():
 class Portfolio(models.Model):
     ptr_username = models.ForeignKey(User, null=False, on_delete=models.SET(set_none))
     area = models.CharField(max_length=200, null=False)
-    svc_cd = models.CharField(max_length=6, null=False)
+    svc_cd = models.CharField(max_length=30, null=False)
     work_spc_kind = models.CharField(max_length=20, null=False)
     work_ym = models.CharField(max_length=6, null=False)
     title = models.CharField(max_length=100)

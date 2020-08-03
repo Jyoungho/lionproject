@@ -7,6 +7,6 @@ urlpatterns = [
     path('<int:estimate_id>/', views.portfolioList_forR, name='list_forR'), # 요청자로 로그인 시
     path('detail/<int:portfolio_id>/', views.detail, name='detail'),
     path('new/', views.new, name='new'),
-    path('<int:portfolio_id>/edit/', views.edit, name='edit'),
-    path('<int:portfolio_id>/delete/', views.delete, name='delete'),
+    path('detail/<int:portfolio_id>/edit/', views.edit, name='edit'),
+    path('detail/<int:portfolio_id>/delete/', views.delete, name='delete'),
 ]

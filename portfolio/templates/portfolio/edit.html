@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>포트폴리오 수정: 철거해조</title>
+{% endblock %}
+
+{% load static %}
+{% block sytle %}
+    <link rel="stylesheet" href="{% static 'portfolio/style.css' %}" type="text/css" />
+{% endblock %}
+ 
+{% block content %}
+  
+<section id="new">
+    <div class="container">
+        <div class="row">   
+            <div class="col-lg-8 mx-auto">
+
+                <!-- Image (슬라이드 형식)-->                
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        {% for image in images %}
+                            <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter }}" class="{% if forloop.first %}active{% endif %}"></li>
+                        {% endfor %}
+                    </ol>
+                    <div class="carousel-inner">
+                        {% for portfolio_img in portfolio_imgs %}
+                            <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                                <img class="d-block w-100" src="{{ portfolio_img.img.url }}" alt="">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                <!--End Image-->
+
+                <form method="POST" action="{% url 'portfolio:edit' portfolio.id %}" id="portfolio" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <h4>포트폴리오 수정</h4>
+                    <br><br>
+                    <!--견적서 제목-->
+                    <div class="form-group">
+                        <label class="label" for="title">제목</label>
+                        <input class="form-control" type="text" id="title" name="title" value="{{ portfolio.title }}" required>
+                    </div>
+
+                    <!--작업 지역 : 시군구 데이터 가져오기 (2칸으로 나눠서??)-->
+                    <div class="form-group">
+                        <label class="label" for="area">작업 지역</label>
+                        <input class="form-control" type="text" id="area" name="area" value="{{ portfolio.area }}" required>
+                    </div>
+
+                    <!--서비스 코드 : select로 선택(철거, 원복, 철거/원복, 에어컨설치)-->
+                    <div class="form-group">
+                        <label class="label" for="svc_cd">서비스업종</label>
+                        <select form="portfolio" class="form-control" id="svc_cd" name="svc_cd" required>
+                            <option selected>{{ portfolio.svc_cd }}</option>
+                            <option value="철거">철거</option>
+                            <option value="원복">원복</option>
+                            <option value="에어컨">에어컨</option>
+                            <option value="철거/원복">철거/원복</option>
+                            <option value="철거/원복/에어컨">철거/원복/에어컨</option>
+                        </select>
+                    </div>
+
+                    <!--작업 공간 종류 : 라디오버튼 및 기타(텍스트박스)-->
+                    <div class="form-group">
+                        <label class="label" for="work_spc_kind">작업 공간 종류</label>
+                        <select form="portfolio" class="form-control" id="work_spc_kind" name="work_spc_kind" required>
+                            <option selected>{{ portfolio.work_spc_kind }}</option>
+                            <option value="상가/매장">상가/매장</option>
+                            <option value="사무실/학원">사무실/학원</option>
+                            <option value="식당/카페">식당/카페</option>
+                            <option value="헬스/운동">헬스/운동</option>
+                            <option value="병원">병원</option>
+                            <option value="미용실/뷰티샵">미용실/뷰티샵</option>
+                            <option value="PC방/노래방">PC방/노래</option>
+                            <option value="주거공간">주거공간</option>
+                            <option value="기타">기타</option>
+                        </select>
+                        {% comment %} <input class="form-control" type="text" id="work_spc_kind" name="work_spc_kind_etc"> {% endcomment %}
+                    </div>
+
+                    <!--작업 날짜-YYYY : YYYYMM형식으로 입력받기 (input 2개로 나눠서)-->
+                    <div class="form-group">
+                        <label class="label" for="yyyy">작업 시기</label>
+                        <div class="left-align">
+                            <input class="form-control yyyy" type="number" id="yyyy" name="yyyy" value="{{ portfolio.work_ym|slice:"0:4" }}" required>년
+                            <span class="col-sm-1"></span>
+                            <input class="form-control mm" type="number" id="mm" name="mm" value="{{ portfolio.work_ym|slice:"4:" }}" required>월
+                        </div>
+                    </div>
+                    
+                    <!--상세 내용-->
+                    <div class="form-group">
+                        <label for="cont">추가 내용</label>
+                        <textarea class="form-control" id="cont" rows="3" name="cont" required>{{ portfolio.cont }}</textarea>
+                    </div>
+                    
+                    <!--이미지 업로드 (대표이미지 선택은??)--> <!-- 이미지 처리하는 view 따로 필요?-->
+                    <div class="form-group">
+                        {{ form.as_p }}
+                    </div>
+                    <div align="right">
+                        <button type="submit" class="btn btn-primary mb-4 pull-right">수정 완료</button>
+                    </div>
+                </form>
+                <br><br>
+                <div class="text-right">
+                    <a  href="{% url 'portfolio:list_forP' %}">목록</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+

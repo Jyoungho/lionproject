@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{% static 'portfolio/style.css' %}" type="text/css" />
 {% endblock %}
 
+
 {% block content %}
 <section id="detail">
     <div class="container">
@@ -23,20 +24,45 @@
                         <h3>{{ portfolio.title }}</h3>
                     </div>
                     <div class="col text-right">
-                        <small class="text-muted text-right">작업일(YYYY.MM)</small>
+                        <p class="text-muted text-right">작업 시기 : {{ portfolio.work_ym|slice:"0:4" }}.{{ portfolio.work_ym|slice:"4:" }}</p>
                     </div>
                 </div>
                 <br>
-                <!--이미지 추가(카드 형식)-->  
+                <!-- Image (슬라이드 형식)-->                
+                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                    <ol class="carousel-indicators">
+                        {% for image in images %}
+                            <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter }}" class="{% if forloop.first %}active{% endif %}"></li>
+                        {% endfor %}
+                    </ol>
+                    <div class="carousel-inner">
+                        {% for image in images %}
+                            <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                                <img class="d-block w-100" src="{{ image.img.url }}" alt="">
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Previous</span>
+                    </a>
+                    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="sr-only">Next</span>
+                    </a>
+                </div>
+                <!--End Image-->
+                <br><br>
+
                              
                 <div>
                     <ul>
                         <li><h5>작업 지역</h5></li>
-                            <p></p>
+                            <p>{{ portfolio.area }}</p>
                         <li><h5>작업 공간 유형</h5></li>
-                            <p></p>
+                            <p>{{ portfolio.work_spc_kind }}</p>
                         <li><h5>상세 내용</h5></li>
-                            <p></p>
+                            <p>{{ portfolio.cont }}</p>
                     </ul>
                 </div>
                 
@@ -50,7 +76,7 @@
                     <!-- 포트폴리오 작성자만 수정, 삭제 -->
                     {% if user == portfolio.ptr_username %}
                         <div class="text-right">
-                            <a href="{% url 'portfolio:edit' estimate.id %}"><button type="button" class="btn btn-outline-secondary">수정 <i class="fas fa-eraser fa-lg"></i></button></a>
+                            <a href="{% url 'portfolio:edit' portfolio.id %}"><button type="button" class="btn btn-outline-secondary">수정 <i class="fas fa-eraser fa-lg"></i></button></a>
 
                             <!-- Button trigger modal -->
                             <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
@@ -75,7 +101,10 @@
                         </div>
                     {% endif %}
                 {% endif %}
-            
+                <br><br>
+                <div class="text-right">
+                    <a  href="{% url 'portfolio:list_forP' %}">목록</a>
+                </div>
             </div>
         </div>
     </div>
