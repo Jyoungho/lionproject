@@ -31,7 +31,7 @@
                     </ul>
                 </div>
                 
-                <a href="#">요청서로 이동</a>
+                <a href="{% url 'requests:detail' estimate.req_id.id %}">요청서로 이동</a>
                 {% comment %} <a href="{% url 'requests:detail' request_id %}">요청서로 이동</a> {% endcomment %}
                 <br>
                 {% if user_extend.user_type == 'R' %}

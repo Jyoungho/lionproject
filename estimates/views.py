@@ -55,25 +55,32 @@ def detail(request, estimate_id):
     return render(request, 'estimates/detail.html', context)
 
 @login_required
-def new(request):
+# request.id 필요 
+def new(request, request_id):
     user_extend = User_extend.objects.get(user=request.user)
+    req = Request.objects.get(id=request_id)
     if user_extend.user_type == 'R':
         return redirect('home:home')
     else:
-        return render(request, 'estimates/new.html')
+        context = { 
+            'user_extend' :user_extend,
+            'req' : req, 
+            }
+        return render(request, 'estimates/new.html', context)
 
 @login_required
 def create(request, request_id):
     ptr_username = request.user
-    req_id = request_id
+    req = Request.objects.get(id=request_id)
+    
     title = request.POST['title']
     price = request.POST['price']
     cont = request.POST['cont']
 
-    estimate = Estimate(ptr_username=ptr_username, req_id=req_id, price=price, title=title, cont=cont, del_yn='N')
+    estimate = Estimate(ptr_username=ptr_username, req_id=req, price=price, title=title, cont=cont, del_yn='N')
     estimate.save()
 
-    return redirect('estimates:detail', estimate_id = estimate.id)
+    return redirect('estimates:detail', estimate_id=estimate.id)
 
 
 @login_required
@@ -95,7 +102,11 @@ def edit(request, estimate_id):
 
     # GET 방식일때    
     else:
-        context = {'estimate' : estimate}
+        user_extend = User_extend.objects.get(user=request.user)
+        context = {
+            'estimate' : estimate,
+            'user_extend' : user_extend,
+        }
         return render(request, 'estimates/edit.html', context)
 
 

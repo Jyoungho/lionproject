@@ -80,6 +80,11 @@
   </div>
   {% endif %}
   
+  {% if user_extend.user_type == 'P' %}
+  <div class="text-right">
+    <a  href="{% url 'estimates:new' req.id %}"><button type="button" class="btn btn-primary">견적서 보내기</button></a>
+  </div>
+  {% endif %}
 </section>
 {% endblock %}
 
