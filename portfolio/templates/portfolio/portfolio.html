@@ -14,55 +14,85 @@
 {% endblock %}
  
 {% block content %}
-<section id="info">
-    <div class="container text-center">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                {% if user_extend.user_type == 'R' %}
+    {% if user_extend.user_type == 'R' %}
+    <section id="ptr_info">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto">
+
                     <!--프로필 사진 추가-->
-                    {% if ptr_info.prof_img.image %}
-                        <div>
-                            <img src="{{ ptr_info.prof_img.url }}" />
+                    <div class="card plaintext">
+                        <div class="row no-gutters">
+                            {% if ptr_info.prof_img %}
+                            <div class="col-md-3 align-items-center" id="parent">
+                                <img class="card-img align-self-center" id="child" src="{{ ptr_info.prof_img.url }}" />
+                            </div>
+                            {% endif %}
+                            <div class="col-md-1"></div>
+                            <div class="col-md-6">
+                                <div class="card-body">
+                                    <h3 class="card-title">{{ ptr_info.biz_nm }}</h5>
+                                    <p class="card-text">활동 지역 : {{ ptr_info.actv_area }}</p>
+                                    <p class="card-text">주요 서비스 : {{ ptr_info.svc_cd }}</p>
+                                    <p class="card-text">경력 : {{ ptr_info.career }}년</p>
+                                    <p class="card-text">고용 횟수 : {{ ptr_info.svc_cd }}</p>
+                                </div>
+                            </div>
                         </div>
-                    {% endif %}
-                    <h2>{{ ptr_info.biz_nm }}</h2>
-                    <h5>활동 지역 : {{ ptr_info.actv_area }}</h5>
-                    <h5>주요 서비스 : {{ ptr_info.svc_cd }}</h5>
-                {% elif user_extend.user_type == 'P' %}
-                    <h4>나의 포트폴리오를 관리해보세요!</h4>
-                {% endif %}
+                    </div>
+                </div>
             </div>
         </div>
-    </div>        
-</section>
+    </section> 
+    {% elif user_extend.user_type == 'P' %}
+        <header class="bg-primary text-white">
+            <div class="container text-center">
+                <h3>나의 포트폴리오를 관리해보세요!</h3>
+                <br>
+                <a href="{% url 'portfolio:new' %}" class="btn btn-light">포트폴리오 추가</a>
+            </div>
+        </header>
+    {% endif %}       
+
 
 <section id="detail">
     <div class="container">
         <div class="row">   
             <div class="col-lg-8 mx-auto">
-                <div class="row row-cols-1 row-cols-md-3">
-                {% for portfolio in portfolios %}
-                    <div class="col mb-4">
-                        <div class="card h-100">
-                            {% for main_image in main_images %}
-                                {% if main_image.portfolio_id.id == portfolio.id %}
-                                    <img src="{{ main_image.image.url }}" class="card-img-top" alt="..." />
-                                {% endif %}
-                            {% endfor %}
-                            <div class="card-body">
-                                <h5 class="card-title">{{ portfolio.title }}</h5>
-                                <p class="card-text" id="area">{{ portfolio.area }}</p>
-                                <p class="card-text" id="svc">{{ portfolio.svc_cd }}</p>
-                                <p class="card-text">{{ portfolio.work_ym }}</p>
+                {% if portfolios %}
+                    <div class="row row-cols-1 row-cols-md-2 align-items-center">
+                        {% for portfolio in portfolios %}
+                            
+                            <div class="col mb-4">
+                                <div class="card h-100">
+                                    <!-- 메인 이미지 추출 -->
+                                    {% for main_image in main_images %}
+                                        {% if main_image.portfolio_id.id == portfolio.id %}
+                                        <div>
+                                            <img src="{{ main_image.img.url }}" class="card-img-top" alt="..." />
+                                        </div>
+                                        {% endif %}
+                                    {% endfor %}
+                                    <div class="card-body">
+                                        <a href="{% url 'portfolio:detail' portfolio.id %}" style="color:black;"><h5 class="card-title">{{ portfolio.title }}</h5></a>
+                                        <p class="card-text" id="area">{{ portfolio.area }}</p>
+                                        <p class="card-text" id="svc">{{ portfolio.svc_cd }}</p>
+                                        <p class="card-text" id="work_ym">{{ portfolio.work_ym|slice:"0:4" }}.{{ portfolio.work_ym|slice:"4:" }}</p>
+                                    </div>
+                                    <div class="card-footer">
+                                        <small class="text-muted">{{ portfolio.mod_dtti|date:'Y-m-d H:i' }}에 최종 수정</small>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="card-footer">
-                                {% comment %} <small class="text-muted">Last updated 3 mins ago</small> {% endcomment %}
-                                <a href="{% url 'portfolio:detail' portfolio.id %}" class="btn btn-link">..more</a>
-                            </div>
-                        </div>
+                            
+                        {% endfor %}
                     </div>
-                {% endfor %}
-                </div>
+                {% else %}
+                    <h2>등록된 포트폴리오가 없습니다.</h2>
+                    {% if user_extend.user_type == 'P' %}
+                        <a href="{% url 'portfolio:new' %}" class="btn btn-link">포트폴리오를 만들어보세요!</a>
+                    {% endif %}
+                {% endif %}    
             </div>
         </div>
     </div>
