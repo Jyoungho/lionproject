@@ -21,7 +21,7 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <form method="POST" action="{% url 'accounts:signup_requester' %}">
+                <form method="POST" action="{% url 'accounts:signup_requester' %}" enctype="multipart/form-data">
                     {% csrf_token %}
 
                     <h1>사용자 회원가입</h1>
@@ -29,7 +29,7 @@
                     <!--공통: ID(email)만 입력 가능-->
                     <div class="form-group">
                         <label class="label" for="username">ID(Email)</label>
-                        <input class="form-control" type="email" id="username" name="username" placeholder="email 입력">
+                        <input class="form-control" type="email" id="username" name="username" placeholder="Email 입력">
                     </div>
 
                     <!--공통: 닉네임-->
@@ -50,10 +50,16 @@
                         <input class="form-control" type="password" id="password_check" name="password_check">
                     </div>
 
+                    <!--공통: 프로필 이미지-->
+                    <div class="form-group">
+                        <label class="label" for="prof_img">프로필 이미지</label>
+                        <input class="form-control-file" type="file" id="prof_img" name="prof_img">
+                    </div>
+
                     <!--공통: 전화번호-->
                     <div class="form-group">
                         <label class="label" for="tel">전화번호</label>
-                        <input class="form-control" type="text" id="tel" name="tel" placeholder="01000000000">
+                        <input class="form-control" type="text" id="tel" name="tel" placeholder="'-' 없이 입력해주세요.">
                     </div>
 
                     <!--공통: 회원가입버튼-->

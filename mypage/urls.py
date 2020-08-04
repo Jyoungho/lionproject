@@ -4,5 +4,8 @@ from . import views
 
 app_name= 'mypage'
 urlpatterns = [
-    path('', views.detail, name ='detail'),
+    path('', views.index, name='index'),
+    path('change_pw/', views.change_pw, name ='change_pw'),
+    path('edit/', views.edit, name ='edit'),
+    path('update/', views.update, name ='update'),
 ]

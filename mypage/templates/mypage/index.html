@@ -1,37 +1,80 @@
 {% extends "base.html" %}
 
 {% block title %}
-  <title>MyPage:철거해줘</title>
+<title>MyPage:철거해줘</title>
 {% endblock %}
 
 {% load static %}
 
 {% block sytle %}
 {% endblock %}
- 
+
 {% block content %}
-  
-<section id="mypage">
-    {%if error%}
-        <div class="alert alert-danger" role="alert">
-            {{error}}
-        </div>
-    {%endif%}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h1>mypage</h1>
+<section id="mypage_index">
+    <!--{%if error%}
+    <div class="alert alert-danger" role="alert">
+        {{error}}
+    </div>
+    {%endif%}-->
 
-                <div class="form-group">
-                    <h2>index</h2>
-                    <h2>{{user.username}}</h2>
-                    <h2><a href=" /mypage/{{user.id }}">마이페이지이동</a></h2>
+
+    {% if user %}
+        <div class="container">
+          <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h1>{{user_extend.nickname}}의 My Page</h1>
+                </div>
+                
+                <div class="col-lg-8 mx-auto">
+                    <h3>ID</h3>
+                    <p>{{ user.username }}</p>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <h3>패스워드</h3>
+                    <a href="{% url 'mypage:change_pw'%}"><p>수정</p></a>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <h3>닉네임</h3>
+                    <p>{{ user_extend.nickname }}</p>
+                </div>
+                {%if user_extend.prof_img %}
+                <div class="col-lg-8 mx-auto">
+                    <h3>프로필 사진</h3>
+                    <img width="200" src="{{user_extend.prof_img.url }}" />
+                </div>
+                {%endif%}
+                <div class="col-lg-8 mx-auto">
+                    <h3>전화번호</h3>
+                    <p>{{ user_extend.tel }}</p>
+                </div>
+                <!--파트너: 활동지역, 업종, 서비스가능지역-->
+                {% if user_extend.user_type == 'P' %}
+                <div class="col-lg-8 mx-auto">
+                    <h3>활동지역</h3>
+                    <p>{{ user_extend.actv_area }}</p>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <h3>업종</h3>
+                    <p>{{ user_extend.svc_cd }}</p>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <h3>서비스가능지역</h3>
+                    <p>{{ user_extend.work_spc_kind }}</p>
+                </div>
+                {% endif %}
+                <div class="col-lg-8 mx-auto">
+                    <a href="{% url 'mypage:edit' %}"><button type="submit" class="btn btn-primary">정보수정</button></a>
                 </div>
             </div>
         </div>
+
+    {% else %}
+    <div class="container">
+        <h2>등록된 유저가 없습니다.</h2>
     </div>
+    {% endif %}
+
 </section>
 
 {% endblock %}
-

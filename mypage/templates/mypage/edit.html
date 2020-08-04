@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  <title>파트너회원가입:철거해줘</title>
+  <title>EditMyPage:철거해줘</title>
 {% endblock %}
 
 {% load static %}
@@ -11,7 +11,7 @@
  
 {% block content %}
   
-<section id="signup_partner">
+<section id="signup_requester">
     {%if error%}
         <div class="alert alert-danger" role="alert">
             {{error}}
@@ -21,56 +21,58 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <form method="POST" action="{% url 'accounts:signup_partner' %}" enctype="multipart/form-data">
+                <h1>정보 변경</h1>
+            </div>
+            {%if user_extend.prof_img%}
+            <div class="col-lg-8 mx-auto">
+                <img width="200" src="{{user_extend.prof_img.url}}" />
+            </div>
+            {%endif%}
+        </div>
+
+        
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+                <form method="POST" action="{% url 'mypage:update' %}" enctype="multipart/form-data">
                     {% csrf_token %}
 
-                    <h1>파트너 회원가입</h1>
-
-                    <!--공통: ID(email)만 입력 가능-->
+                    <!--공통: ID(email)-->
                     <div class="form-group">
-                        <label class="label" for="username">ID(Email)</label>
-                        <input class="form-control" type="email" id="username" name="username" placeholder="Email 입력">
+                        <h5>ID</h5>
+                        <p>{{ user.username }}</p>
                     </div>
 
                     <!--공통: 닉네임-->
                     <div class="form-group">
                         <label class="label" for="nickname">닉네임</label>
-                        <input class="form-control" type="text" id="nickname" name="nickname" placeholder="닉네임 입력">
-                    </div>
-
-                    <!--공통: 패스워드-->
-                    <div class="form-group">
-                        <label class="label" for="password">Password</label>
-                        <input class="form-control" type="password" id="password" name="password">
-                    </div>
-
-                    <!--공통: 패스워드체크-->
-                    <div class="form-group">
-                        <label class="label" for="password_check">Password 확인</label>
-                        <input class="form-control" type="password" id="password_check" name="password_check">
+                        <input class="form-control" type="text" id="nickname" name="nickname" value="{{user_extend.nickname}}">
                     </div>
 
                     <!--공통: 프로필 이미지-->
                     <div class="form-group">
                         <label class="label" for="prof_img">프로필 이미지</label>
-                        <input class="form-control-file" type="file" id="prof_img" name="prof_img">
+                        <input class="form-control-file" type="file" id="prof_img" name="prof_img" value="{{user_extend.prof_img}}">
                     </div>
 
                     <!--공통: 전화번호-->
                     <div class="form-group">
                         <label class="label" for="tel">전화번호</label>
-                        <input class="form-control" type="text" id="tel" name="tel" placeholder="'-' 없이 입력해주세요.">
+                        <input class="form-control" type="text" id="tel" name="tel" value="{{user_extend.tel}}">
                     </div>
 
+                    {% if user_extend.user_type == 'P' %}
                     <!--파트너: 활동지역-->
                     <div class="form-group">
                         <label class="label" for="actv_area">활동지역</label>
-                        <input class="form-control" type="text" id="actv_area" name="actv_area" placeholder="드롭다운변경, 아이디검토">
+                        <input class="form-control" type="text" id="actv_area" name="actv_area" value="{{user_extend.actv_area}}">
                     </div>
 
                     <!--파트너: 서비스업종-->
                     <div class="form-group">
-                        <label class="label" for="svc_cd">서비스업종</label>
+                        <label class="label" for="svc_cd">서비스업종 (현재선택: {{user_extend.svc_cd}})</label>
                         <select class="form-control" id="svc_cd" name="svc_cd">
                             <option value="DEM">철거</option>
                             <option value="RES">원복</option>
@@ -82,16 +84,17 @@
 
                     <!--파트너: 작업가능공간종류-->
                     <div class="form-group">
-                        <label class="label" for="work_spc_kind">작업공간종류</label>
+                        <label class="label" for="work_spc_kind">작업공간종류 (현재선택: {{user_extend.work_spc_kind}})</label>
                         <select class="form-control" id="work_spc_kind" name="work_spc_kind">
                             <option value="office">사무실</option>
                             <option value="store">상가</option>
                             <option value="living">주거공간</option>
                         </select>
                     </div>
+                    {% endif %}
 
                     <!--공통: 회원가입버튼-->
-                    <button type="submit" class="btn btn-primary">회원가입</button>
+                    <button type="submit" class="btn btn-primary">정보수정</button>
 
                 </form>
             </div>
