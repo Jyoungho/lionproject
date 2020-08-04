@@ -27,3 +27,23 @@
 /* .left-align {
     text-align: left;
 } */
+
+.form-group .inline .juso{
+    display: inline;
+    width: 500px;
+}
+
+.form-group .inline .search{
+    display: inline;
+    width: 100px;
+}
+
+.form-group .inline .sido{
+    display: inline;
+    width: 250px;
+}
+
+.form-group .inline .sigungu{
+    display: inline;
+    width: 350px;
+}
