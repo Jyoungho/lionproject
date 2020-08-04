@@ -87,17 +87,11 @@
 
                       <!--Dropdown menu-->
                       <div class="dropdown-menu dropdown-menu-lg-right">
-<<<<<<< HEAD
                         <a class="dropdown-item" href="{% url 'mypage:detail' %}">My Page</a>
                         <!--요청자로 로그인 했을 때-->
                         {% if user_extend.user_type == 'R' %}
                           <a class="dropdown-item" href="{%url 'requests:new' %}">요청서 작성</a>
                           <form action="{% url 'accounts:exchange' %}" method="POST">
-=======
-                        <a class="dropdown-item" href="{% url 'mypage:detail' %}">My Page</a><!--요청자로 로그인 했을 때-->
-                        {% if user_extend.user_type == 'R' %}
-                        <a class="dropdown-item" href="{%url 'requests:new' %}">요청서 작성</a><form action="{% url 'accounts:exchange' %}" method="POST">
->>>>>>> 8a2dd7926e19728eaa56e153f0cabe24f420c534
                             {% csrf_token %}
                             <button class="dropdown-item" type="submit">파트너로 전환</button>
                           </form>
