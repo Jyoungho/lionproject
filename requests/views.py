@@ -15,11 +15,17 @@ def requests(request):
     paginator = Paginator(reqs, pageDivision) 
     page = request.GET.get('page')
     contacts = paginator.get_page(page)
-    page_container = contacts.number/5
+    page_obj = paginator.page(page)
     ###
-    
+
+    numItems = request.GET.get('numItems')
+
+    if contacts.number>2:
+        roof5 = [contacts.number-2 ,contacts.number-1, contacts.number, contacts.number+1, contacts.number+2]  
+    else:
+        roof5 = [1,2,3,4,5]
     context = {'reqs' : reqs, 'contacts': contacts,
-    'page_container' : page_container}
+    'roof5': roof5, 'page_obj':page_obj, 'page':page}
     return render(request, 'requests/requests.html', context)
 
 @login_required
@@ -53,7 +59,7 @@ def detail(request, requests_id):
     reqr_info = User.objects.get(id = req.reqr_username.id)
     reqr_info_extend = User_extend.objects.get(user = reqr_info)
     user_extend = User_extend.objects.filter(user_id = req.reqr_username_id)
-    context = {'req' : req, 'reqr_info_extend' : reqr_info_extend }
+    context = {'req' : req, 'reqr_info_extend' : reqr_info_extend}
     return render(request, 'requests/detail.html', context)
 
 @login_required

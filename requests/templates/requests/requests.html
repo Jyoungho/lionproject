@@ -33,9 +33,10 @@
         <th>상세</th>
       </tr>
     </thead>
-    {% for req in reqs %}
+  
+    {% for req in page_obj %}
     <tbody class = 'table td'>
-      <td>{{req.id}}</td>
+      <td>{{forloop.counter}}</td>
       <td>{{req.reqr_username}}</td>
       <td><a href="{% url 'requests:detail' req.id %}">{{req.title}}</a></td>
       <td>{{req.mod_dtti}}</td>
@@ -52,23 +53,19 @@
         <li class="page-item"><a class="page-link" href="?page = 1">처음페이지</a></li>    
         <li class="page-item"><a class="page-link" href="?page={{contacts.previous_page_number}}">이전</a></li>
       {% endif %}
-       Page {{contacts.number }} of {{contacts.paginator.num_pages}}
-
-      {% if contacts.has_previous %}
-        <li class="page-item"><a class="page-link" href="">#</a></li>  
-      {% endif %}
-       <li class="page-item"><a class="page-link" href="?page = {{ contacts.number }}">1</a></li> 
+          {% for i in roof5 %}
+            <li class="page-item"><a class="page-link" href="?page = {{i}}">{{i}}</a></li>
+          {% endfor %}
+        
       
       {% if contacts.has_next %}
         <li class="page-item"><a class="page-link" href="?page={{ contacts.next_page_number }}">다음</a></li>
         <li class="page-item"><a class="page-link" href="?page={{ contacts.paginator.num_pages }}">끝으로</a></li>
       {% endif %}
       
-      <li class="page-item"><a class="page-link" href="#">1</a></li>
-      <li class="page-item"><a class="page-link" href="#">2</a></li>
-      <li class="page-item"><a class="page-link" href="#">3</a></li>
     </ul>
   </div>
 </section>
 {% endblock %}
+
 
