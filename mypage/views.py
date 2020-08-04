@@ -13,9 +13,11 @@ def index(request):
 
 def change_pw(request):
     context= {}
-
+    user_extend = User_extend.objects.get(user=request.user) 
+    context = {'user_extend' : user_extend,}
     if request.method == "POST":
         current_password = request.POST.get("origin_password")
+        context = {'user_extend' : user_extend,}
         user = request.user
         if check_password(current_password,user.password):
             new_password = request.POST.get("password1")
@@ -26,17 +28,15 @@ def change_pw(request):
                 auth.login(request,user)
                 return redirect("home:home")
             else:
-                user_extend = User_extend.objects.get(user=request.user)  
                 context = {
                     'user_extend' : user_extend,
                     'error':"새로운 비밀번호를 다시 확인해주세요."
                 }
         else:
-            user_extend = User_extend.objects.get(user=request.user)  
             context = {
                     'user_extend' : user_extend,
                     'error':"현재 비밀번호가 일치하지 않습니다."
-                }
+            }
 
     return render(request, "mypage/change_pw.html",context)
 
@@ -52,7 +52,7 @@ def update(request):
     if 'prof_img' in request.FILES:
         user_extend.prof_img = request.FILES['prof_img']
     if user_extend.user_type == 'P':
-        user_extend.actv_area=request.POST['actv_area']
+        user_extend.actv_area=actv_area=request.POST['postcode_sido']+" "+request.POST['postcode_sigungu']
         user_extend.svc_cd=request.POST['svc_cd']
         user_extend.work_spc_kind=request.POST['work_spc_kind']
     user_extend.save()
@@ -66,7 +66,7 @@ def update_exchange(request):
     user_extend.tel=request.POST['tel']
     if 'prof_img' in request.FILES:
         user_extend.prof_img = request.FILES['prof_img']
-    user_extend.actv_area=request.POST['actv_area']
+    user_extend.actv_area=actv_area=request.POST['postcode_sido']+" "+request.POST['postcode_sigungu']
     user_extend.svc_cd=request.POST['svc_cd']
     user_extend.work_spc_kind=request.POST['work_spc_kind']
     user_extend.save()

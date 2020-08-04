@@ -11,7 +11,6 @@ def signup(request):
 def signup_partner(request):
 
     context = {}
-    user_extend = User_extend.objects.get(user=request.user)
 
     #POST method
     if request.method == 'POST':
@@ -28,7 +27,7 @@ def signup_partner(request):
                 prof_img = request.FILES['prof_img']
             nickname=request.POST['nickname'] #닉네임
             tel=request.POST['tel'] #전화번호
-            actv_area=request.POST['actv_area'] #활동지역
+            actv_area=request.POST['postcode_sido']+" "+request.POST['postcode_sigungu'] #활동지역
             svc_cd=request.POST['svc_cd'] #서비스업종
             work_spc_kind=request.POST['work_spc_kind'] #작업가능공간종류
             user_type='P' #파트너로 타입 지정
