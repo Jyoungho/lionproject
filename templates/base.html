@@ -95,7 +95,6 @@
                             {% csrf_token %}
                             <button class="dropdown-item" type="submit">파트너로 전환</button>
                           </form>
-​
                         <!--파트너로 로그인 했을 때-->
                         {% elif user_extend.user_type == 'P' %}
                           <a class="dropdown-item" href="{% url 'portfolio:list_forP' %}">나의 포트폴리오</a>
