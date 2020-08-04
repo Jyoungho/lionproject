@@ -24,7 +24,7 @@ class Request(models.Model):
     mod_dtti = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.reqr_username} : {self.title}'
+        return f'{self.reqr_username}, Request_id:{self.id}, {self.title}'
 
 class Request_img(models.Model):
     req_id = models.ForeignKey(Request, on_delete=models.CASCADE)
