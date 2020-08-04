@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from requests.models import Request, Request_img
 from accounts.models import User_extend
@@ -21,10 +22,14 @@ def requests(request):
     'page_container' : page_container}
     return render(request, 'requests/requests.html', context)
 
+@login_required
 def new(request):
-    context = {}
+    user_extend = User_extend.objects.get(user = request.user)
+    context = {'user_extend' : user_extend}
+    
     return render(request, 'requests/new.html', context)
 
+@login_required
 def create(request):
     title = request.POST['title']
     cont = request.POST['cont']
@@ -51,10 +56,12 @@ def detail(request, requests_id):
     context = {'req' : req, 'reqr_info_extend' : reqr_info_extend }
     return render(request, 'requests/detail.html', context)
 
+@login_required
 def edit(request):
     context = {}
     return render(request, 'requests/edit.html', context)
 
+@login_required
 def delete(request):
     
     return redirect('requests:requests')

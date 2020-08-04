@@ -55,9 +55,7 @@
        Page {{contacts.number }} of {{contacts.paginator.num_pages}}
 
       {% if contacts.has_previous %}
-        {% for i in 12345 %}
         <li class="page-item"><a class="page-link" href="">#</a></li>  
-        {% endfor %}    
       {% endif %}
        <li class="page-item"><a class="page-link" href="?page = {{ contacts.number }}">1</a></li> 
       
