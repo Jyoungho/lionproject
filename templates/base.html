@@ -1,37 +1,37 @@
 {% load static %}
-
+​
 <!DOCTYPE html>
 <html lang="ko">
-
+​
 <head>
-
+​
   {% block title %}
   {% endblock %}
-
+​
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
+​
   <link rel = "stylesheet" href = "{% static 'style.css' %}" type = "text/css" />
-
+​
   <!-- Bootstrap core CSS -->
   <link href="{% static 'lionproject/vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-
+​
   <!-- Custom styles for this template -->
   <link href="{% static 'lionproject/css/scrolling-nav.css' %}" rel="stylesheet">
-
+​
   <!-- Font Awesome 5 CDN-->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" rel="stylesheet"> <!--CDN 링크 -->
-
+​
   {% block sytle %}
     <link rel="stylesheet" href="{% static 'style.css' %}" type="text/css" />
   {% endblock %}
-
+​
 </head>
-
+​
 <body id="page-top">
-
+​
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">
       <a class="navbar-brand js-scroll-trigger" href="{% url 'home:home' %}">철거해조(아이콘)</a>
@@ -40,7 +40,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
-
+​
           <!--로그인 했을 때-->
           {% if user.is_authenticated %}
             <!--요청자로 로그인 했을 때-->
@@ -51,7 +51,7 @@
             <li class="nav-item">
               <a class="nav-link login-menu" href="{%url 'requests:requests' %}">요청서 둘러보기</a>
             </li>
-
+​
             <!--파트너로 로그인 했을 때-->
             {% elif user_extend.user_type == 'P' %}
             <li class="nav-item">
@@ -61,11 +61,11 @@
               <a class="nav-link login-menu" href="{% url 'requests:requests' %}">요청서 둘러보기</a>
             </li>
             {% endif %}
-
+​
           <!--로그인 안했을 때-->
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href='/requests/?page=1'>요청</a>
+              <a class="nav-link" href='/requests/'>게시판</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#services">이건뭐였지</a>
@@ -74,7 +74,7 @@
               <a class="nav-link js-scroll-trigger" href="#contact">이건또뭐였지</a>
             </li>
           {% endif %}
-
+​
           <!--Dropdown Header-->
           <!--로그인 했을 때-->
             <li class="nav-item">
@@ -84,25 +84,18 @@
                       <button type="button" class="btn btn-link dropdown-toggle" data-toggle="dropdown" data-display="static" aria-haspopup="true" aria-expanded="false">
                         {{ user_extend.nickname }}님 안녕하세요
                       </button>
-
+​
                       <!--Dropdown menu-->
                       <div class="dropdown-menu dropdown-menu-lg-right">
-
-                        <a class="dropdown-item" href="{% url 'mypage:detail' %}">My Page</a>
                         <a class="dropdown-item" href="{% url 'mypage:index' %}">My Page</a>
-
                         <!--요청자로 로그인 했을 때-->
                         {% if user_extend.user_type == 'R' %}
                           <a class="dropdown-item" href="{%url 'requests:new' %}">요청서 작성</a>
                           <form action="{% url 'accounts:exchange' %}" method="POST">
-                        <a class="dropdown-item" href="{% url 'mypage:detail' %}">My Page</a><!--요청자로 로그인 했을 때-->
-                        {% if user_extend.user_type == 'R' %}
-                        <a class="dropdown-item" href="{%url 'requests:new' %}">요청서 작성</a><form action="{% url 'accounts:exchange' %}" method="POST">
-
                             {% csrf_token %}
                             <button class="dropdown-item" type="submit">파트너로 전환</button>
                           </form>
-
+​
                         <!--파트너로 로그인 했을 때-->
                         {% elif user_extend.user_type == 'P' %}
                           <a class="dropdown-item" href="{% url 'portfolio:list_forP' %}">나의 포트폴리오</a>
@@ -137,10 +130,10 @@
         </ul>
       </div>
   </nav>
-
+​
   {% block content %}
   {% endblock %}
-
+​
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
@@ -148,17 +141,17 @@
     </div>
     <!-- /.container -->
   </footer>
-
+​
   <!-- Bootstrap core JavaScript -->
   <script src="{% static 'lionproject/vendor/jquery/jquery.min.js' %}"></script>
   <script src="{% static 'lionproject/vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
-
+​
   <!-- Plugin JavaScript -->
   <script src="{% static 'lionproject/vendor/jquery-easing/jquery.easing.min.js' %}"></script>
-
+​
   <!-- Custom JavaScript for this theme -->
   <script src="{% static 'lionproject/js/scrolling-nav.js' %}"></script>
   
 </body>
-
+​
 </html>
