@@ -11,7 +11,8 @@ def signup(request):
 def signup_partner(request):
 
     context = {}
-    
+    user_extend = User_extend.objects.get(user=request.user)
+
     #POST method
     if request.method == 'POST':
         if(request.POST['username'] and
@@ -114,6 +115,7 @@ def logout(request):
     return redirect('home:home')
 
 def exchange(request):
+    
     user_extend = User_extend.objects.get(user=request.user)
     if user_extend.user_type == 'R':
         if user_extend.ptr_join_yn == 'Y':
@@ -121,8 +123,11 @@ def exchange(request):
             user_extend.save()
         else: #only 사용자로만 가입한 사람
             context = {}
-            context['error'] = '파트너로 가입해주세요'
-            return render(request, 'accounts/partner.html', context)
+            context = {
+                'user_extend' : user_extend,
+                'error' : "파트너로 가입해주세요.",
+            }
+            return render(request, 'mypage/exchange.html', context)
     else: #파트너로 로그인해서 고객으로 전환 클릭 시,
         user_extend.user_type = 'R'
         user_extend.save()

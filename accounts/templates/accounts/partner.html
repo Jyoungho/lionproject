@@ -25,6 +25,11 @@
                     {% csrf_token %}
 
                     <h1>파트너 회원가입</h1>
+                    {%if user_extend.prof_img%}
+                    <div class="col-lg-8 mx-auto">
+                        <img width="200" src="{{user_extend.prof_img.url}}" />
+                    </div>
+                    {%endif%}
 
                     <!--공통: ID(email)만 입력 가능-->
                     <div class="form-group">
@@ -35,9 +40,10 @@
                     <!--공통: 닉네임-->
                     <div class="form-group">
                         <label class="label" for="nickname">닉네임</label>
-                        <input class="form-control" type="text" id="nickname" name="nickname" placeholder="닉네임 입력">
+                        <input class="form-control" type="text" id="nickname" name="nickname" value="{{user_extend.nickname}}" placeholder="닉네임 입력">
                     </div>
 
+                    {% if user_extend.user_type != 'R'%}
                     <!--공통: 패스워드-->
                     <div class="form-group">
                         <label class="label" for="password">Password</label>
@@ -49,6 +55,7 @@
                         <label class="label" for="password_check">Password 확인</label>
                         <input class="form-control" type="password" id="password_check" name="password_check">
                     </div>
+                    {%endif%}
 
                     <!--공통: 프로필 이미지-->
                     <div class="form-group">
