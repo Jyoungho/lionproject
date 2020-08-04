@@ -15,7 +15,7 @@
     <div class="container">
         <div class="row">   
             <div class="col-lg-8 mx-auto">
-                <form method="POST" action="{% url 'estimates:create' %}">
+                <form method="POST" action="{% url 'estimates:create' req.id %}">
                     {% csrf_token %}
 
                     <h2>견적서 보내기</h2>
