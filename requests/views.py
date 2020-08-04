@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from requests.models import Request, Request_img
 from accounts.models import User_extend
@@ -8,23 +9,35 @@ from django.core.paginator import Paginator
 
 def requests(request):
     reqs = Request.objects.all().order_by('-id')
-
+    
     # 페이지 분할#
-    pageDivision = 2 #한 페이지에 몇개로 할지
+    page_numbers_range = 5
+    pageDivision = 20 #한 페이지에 몇개로 할지
     paginator = Paginator(reqs, pageDivision) 
     page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    page_container = contacts.number/5
+    current_page = int(page) if page else 1
+    contacts = paginator.get_page(current_page)
+    page_obj = paginator.page(current_page)
     ###
-    
+    start_index = int((current_page -1)/page_numbers_range)*page_numbers_range
+    end_index = start_index+page_numbers_range
+    max_index = len(paginator.page_range)
+    if end_index >= max_index:
+        end_index = max_index
+
+    page_range = paginator.page_range[start_index:end_index]
     context = {'reqs' : reqs, 'contacts': contacts,
-    'page_container' : page_container}
+    'page_obj':page_obj, 'page':page, 'page_range': page_range}
     return render(request, 'requests/requests.html', context)
 
+@login_required
 def new(request):
-    context = {}
+    user_extend = User_extend.objects.get(user = request.user)
+    context = {'user_extend' : user_extend}
+    
     return render(request, 'requests/new.html', context)
 
+@login_required
 def create(request):
     title = request.POST['title']
     cont = request.POST['cont']
@@ -48,13 +61,15 @@ def detail(request, requests_id):
     reqr_info = User.objects.get(id = req.reqr_username.id)
     reqr_info_extend = User_extend.objects.get(user = reqr_info)
     user_extend = User_extend.objects.filter(user_id = req.reqr_username_id)
-    context = {'req' : req, 'reqr_info_extend' : reqr_info_extend }
+    context = {'req' : req, 'reqr_info_extend' : reqr_info_extend}
     return render(request, 'requests/detail.html', context)
 
+@login_required
 def edit(request):
     context = {}
     return render(request, 'requests/edit.html', context)
 
+@login_required
 def delete(request):
     
     return redirect('requests:requests')

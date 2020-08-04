@@ -58,14 +58,18 @@
               <a class="nav-link login-menu" href="{% url 'estimates:list' %}">보낸 견적서</a>
             </li>
             <li class="nav-item">
+<<<<<<< HEAD
               <a class="nav-link login-menu" href="{% url 'requests:requests' %}">요청서 둘러보기</a>
             </li>
+=======
+              <a class="nav-link login-menu" href="{% url 'requests:requests' %}">요청서 둘러보기</a></li>
+>>>>>>> 8a2dd7926e19728eaa56e153f0cabe24f420c534
             {% endif %}
 
           <!--로그인 안했을 때-->
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href='/requests/'>게시판</a>
+              <a class="nav-link" href='/requests/?page=1'>요청</a>
             </li>
             <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#services">이건뭐였지</a>
@@ -87,11 +91,17 @@
 
                       <!--Dropdown menu-->
                       <div class="dropdown-menu dropdown-menu-lg-right">
+<<<<<<< HEAD
                         <a class="dropdown-item" href="{% url 'mypage:detail' %}">My Page</a>
                         <!--요청자로 로그인 했을 때-->
                         {% if user_extend.user_type == 'R' %}
                           <a class="dropdown-item" href="{%url 'requests:new' %}">요청서 작성</a>
                           <form action="{% url 'accounts:exchange' %}" method="POST">
+=======
+                        <a class="dropdown-item" href="{% url 'mypage:detail' %}">My Page</a><!--요청자로 로그인 했을 때-->
+                        {% if user_extend.user_type == 'R' %}
+                        <a class="dropdown-item" href="{%url 'requests:new' %}">요청서 작성</a><form action="{% url 'accounts:exchange' %}" method="POST">
+>>>>>>> 8a2dd7926e19728eaa56e153f0cabe24f420c534
                             {% csrf_token %}
                             <button class="dropdown-item" type="submit">파트너로 전환</button>
                           </form>
