@@ -9,23 +9,25 @@ from django.core.paginator import Paginator
 
 def requests(request):
     reqs = Request.objects.all().order_by('-id')
-
+    
     # 페이지 분할#
-    pageDivision = 2 #한 페이지에 몇개로 할지
+    page_numbers_range = 5
+    pageDivision = 20 #한 페이지에 몇개로 할지
     paginator = Paginator(reqs, pageDivision) 
     page = request.GET.get('page')
-    contacts = paginator.get_page(page)
-    page_obj = paginator.page(page)
+    current_page = int(page) if page else 1
+    contacts = paginator.get_page(current_page)
+    page_obj = paginator.page(current_page)
     ###
+    start_index = int((current_page -1)/page_numbers_range)*page_numbers_range
+    end_index = start_index+page_numbers_range
+    max_index = len(paginator.page_range)
+    if end_index >= max_index:
+        end_index = max_index
 
-    numItems = request.GET.get('numItems')
-
-    if contacts.number>2:
-        roof5 = [contacts.number-2 ,contacts.number-1, contacts.number, contacts.number+1, contacts.number+2]  
-    else:
-        roof5 = [1,2,3,4,5]
+    page_range = paginator.page_range[start_index:end_index]
     context = {'reqs' : reqs, 'contacts': contacts,
-    'roof5': roof5, 'page_obj':page_obj, 'page':page}
+    'page_obj':page_obj, 'page':page, 'page_range': page_range}
     return render(request, 'requests/requests.html', context)
 
 @login_required
