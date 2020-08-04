@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>포트폴리오 작성: 철거해조</title>
+{% endblock %}
+
+{% load static %}
+{% block sytle %}
+    <link rel="stylesheet" href="{% static 'portfolio/style.css' %}" type="text/css" />
+{% endblock %}
+ 
+{% block content %}
+  
+<section id="new">
+    <div class="container">
+        <div class="row">   
+            <div class="col-lg-8 mx-auto">
+                <form method="POST" action="{% url 'portfolio:new' %}" id="portfolio" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <h3>포트폴리오를 작성해보세요!</h3>
+                    <br><br>
+                    <!--견적서 제목-->
+                    <div class="form-group">
+                        <label class="label" for="title">제목</label>
+                        <input class="form-control" type="text" id="title" name="title" placeholder="제목 입력" required>
+                    </div>
+                    
+                    <!-- 작업 지역 -->
+                    <div class="form-group">
+                        <label class="label" for="area">작업 지역</label><br>
+                        <div class="inline">
+                            <input class="form-control juso" type="text" id="sample5_address" placeholder=" 주소">
+                            <input class="btn btn-secondary search" type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
+                        </div>
+                        <div class="inline">
+                            <input  class="form-control sido" type="text" id="postcode_sido" name="postcode_sido" placeholder=" 시/도">
+                            <input  class="form-control sigungu" type="text" id="postcode_sigungu" name="postcode_sigungu" placeholder=" 시/군/구">
+                        </div>
+                    </div>
+
+                    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+                    <script>
+                        
+                        function sample5_execDaumPostcode() {
+                            new daum.Postcode({
+                                oncomplete: function(data) {
+                                    
+                                    var addr = data.address; // 최종 주소 변수
+                                    var sido = data.sido;
+                                    var sigungu = data.sigungu;
+
+                                    // 주소 정보를 해당 필드에 넣는다.
+                                    document.getElementById("sample5_address").value = addr;
+                                    document.getElementById("postcode_sido").value = sido;
+                                    document.getElementById("postcode_sigungu").value = sigungu;
+
+                                }
+                            }).open();
+                        }
+                    </script>
+
+                    <!--서비스 코드 : select로 선택(철거, 원복, 철거/원복, 에어컨설치)-->
+                    <div class="form-group">
+                        <label class="label" for="svc_cd">서비스업종</label>
+                        <select form="portfolio" class="form-control" id="svc_cd" name="svc_cd" required>
+                            <option selected>선택</option>
+                            <option value="철거">철거</option>
+                            <option value="원복">원복</option>
+                            <option value="에어컨">에어컨</option>
+                            <option value="철거/원복">철거/원복</option>
+                            <option value="철거/원복/에어컨">철거/원복/에어컨</option>
+                        </select>
+                    </div>
+
+                    <!--작업 공간 종류 : 라디오버튼 및 기타(텍스트박스)-->
+                    <div class="form-group">
+                        <label class="label" for="work_spc_kind">작업 공간 종류</label>
+                        <select form="portfolio" class="form-control" id="work_spc_kind" name="work_spc_kind" required>
+                            <option selected>선택</option>
+                            <option value="상가/매장">상가/매장</option>
+                            <option value="사무실/학원">사무실/학원</option>
+                            <option value="식당/카페">식당/카페</option>
+                            <option value="헬스/운동">헬스/운동</option>
+                            <option value="병원">병원</option>
+                            <option value="미용실/뷰티샵">미용실/뷰티샵</option>
+                            <option value="PC방/노래방">PC방/노래</option>
+                            <option value="주거공간">주거공간</option>
+                            <option value="기타">기타</option>
+                        </select>
+                        {% comment %} <input class="form-control" type="text" id="work_spc_kind" name="work_spc_kind_etc"> {% endcomment %}
+                    </div>
+
+                    <!--작업 날짜-YYYY : YYYYMM형식으로 입력받기 (input 2개로 나눠서)-->
+                    <div class="form-group">
+                        <label class="label" for="yyyy">작업 시기</label>
+                        <div class="left-align">
+                            <input class="form-control yyyy" type="number" id="yyyy" name="yyyy" placeholder="2020" required>년
+                            <span class="col-sm-1"></span>
+                            <input class="form-control mm" type="number" id="mm" name="mm" placeholder="01" required>월
+                        </div>
+                    </div>
+                    
+                    <!--상세 내용-->
+                    <div class="form-group">
+                        <label for="cont">추가 내용</label>
+                        <textarea class="form-control" id="cont" rows="3" name="cont" placeholder="작업 진행 절차, 소요 시간, 견적가 등 상세 정보를 적어주세요." required></textarea>
+                    </div>
+                    
+                    <!--이미지 업로드 (대표이미지 선택은??)--> <!-- 이미지 처리하는 view 따로 필요?-->
+                    <div class="form-group">
+                        {% comment %} <label for="images">사진 첨부</label>
+                        <input class="form-control-file" type="file" id="images" name="images" multiple required> {% endcomment %}
+                        {{ form.as_p }}
+                    </div>
+                    <div align="right">
+                        <button type="submit" class="btn btn-primary mb-4 pull-right">작성</button>
+                    </div>
+                </form>
+                <br><br>
+                <div class="text-right">
+                    <a  href="{% url 'portfolio:list_forP' %}">목록</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

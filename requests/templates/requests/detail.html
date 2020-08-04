@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+  <title>요청 상세!!</title>
+{% endblock %}
+
+{% load static %}
+
+{% block sytle %}
+{% endblock %}
+
+
+{% block content %}
+<!--
+<header class="bg-primary text-white">
+  <div class="container text-center">
+    <h1>요청할거야!!!</h1>
+    <p class="lead">What?</p>
+  </div>
+</header>
+-->
+<section class = 'col-lg-8 mx-auto'>
+  <h2>상세페이지</h2>
+  {% if req %}
+  <div><h3>작성자</h3>
+    <p>{{reqr_info_extend.nickname}}</p>
+  </div>
+  <p>------------------------</p>
+  <div><h3>제목</h3>
+    <p>{{req.title}}</p>
+  </div>
+  <p>------------------------</p>
+  <div><h3>본문</h3>
+      <p>{{req.cont}}</p>
+  </div>
+  <p>------------------------</p>
+  <div><h3>일하는 구역</h3>
+    <p>{{req.req_area}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>분야
+    <p>{{req.svc_cd}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>작업종류
+    <p>{{req.work_spc_kind}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>엘레베이터 여부
+    <p>{{req.elev_psb_yn}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>크기
+    <p>{{req.size}}</p>
+  </div>
+  <p>------------------------</p>
+  <div>층수
+    <p>{{req.floor}}</p>
+  </div>
+  <p>------------------------</p>
+  <div> 견적서 요청기간 : {{req.req_exp_stt_dt}} ~ {{req.req_exp_end_dt}}</div>
+  <p>------------------------</p>
+  <div> 작업가능 기간 : {{req.work_stt_dt}} ~ {{req.work_end_dt}}</div>
+  <p>------------------------</p>
+  <div> 게 시 일 : {{req.mod_dtti}}</div>
+  {% endif %}
+  
+  {% if user_extend.user_type == 'P' %}
+  <div class="text-right">
+    <a  href="{% url 'estimates:new' req.id %}"><button type="button" class="btn btn-primary">견적서 보내기</button></a>
+  </div>
+  {% endif %}
+</section>
+{% endblock %}
+

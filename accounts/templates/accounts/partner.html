@@ -72,11 +72,12 @@
                     <div class="form-group">
                         <label class="label" for="svc_cd">서비스업종</label>
                         <select class="form-control" id="svc_cd" name="svc_cd">
-                            <option value="DEM">철거</option>
-                            <option value="RES">원복</option>
-                            <option value="ARC">에어컨</option>
-                            <option value="DNR">철거/원복</option>
-                            <option value="ALL">철거/원복/에어컨</option>
+                            <option selected>{{user_extend.svc_cd}}</option>
+                            <option value="철거">철거</option>
+                            <option value="원복">원복</option>
+                            <option value="에어컨">에어컨</option>
+                            <option value="철거/원복">철거/원복</option>
+                            <option value="철거/원복/에어컨">철거/원복/에어컨</option>
                         </select>
                     </div>
 
@@ -84,9 +85,10 @@
                     <div class="form-group">
                         <label class="label" for="work_spc_kind">작업공간종류</label>
                         <select class="form-control" id="work_spc_kind" name="work_spc_kind">
-                            <option value="office">사무실</option>
-                            <option value="store">상가</option>
-                            <option value="living">주거공간</option>
+                            <option selected>{{user_extend.work_spc_kind}}</option>
+                            <option value="사무실">사무실</option>
+                            <option value="상가">상가</option>
+                            <option value="주거공간">주거공간</option>
                         </select>
                     </div>
 

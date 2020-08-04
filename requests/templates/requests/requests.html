@@ -20,10 +20,11 @@
   </div>
 </header>
 
-<section>
+<section class = 'col-lg-8 mx-auto'>
   <h2>요 청 글</h2>
-  <table>
-    <thead>
+  
+  <table class = 'table table-hover'>
+    <thead class = 'table th'>
       <tr>
         <th>#</th>
         <th>작성자</th>
@@ -32,14 +33,39 @@
         <th>상세</th>
       </tr>
     </thead>
-    <tbody>
-      <td>1</td>
-      <td>영호</td>
-      <td>하드코딩</td>
-      <td> 08.01</td>
-      <td> 처음글이다잉</td>
+  
+    {% for req in page_obj %}
+    <tbody class = 'table td'>
+      <td>{{forloop.counter}}</td>
+      <td>{{req.reqr_username}}</td>
+      <td><a href="{% url 'requests:detail' req.id %}">{{req.title}}</a></td>
+      <td>{{req.mod_dtti}}</td>
+      <td><a href="{% url 'requests:detail' req.id %}">자세히보기</a></td>
     </tbody>
+    {% endfor %}
+
   </table>
+  <div><a class = "btn btn-primary" href = "{% url 'requests:new' %}">글쓰기</a></div>
+
+  <div>
+    <ul class="pagination" style = "justify-content: center;">
+      {% if contacts.has_previous %}
+        <li class="page-item"><a class="page-link" href="?page = 1">처음페이지</a></li>    
+        <li class="page-item"><a class="page-link" href="?page={{contacts.previous_page_number}}">이전</a></li>
+      {% endif %}
+      {% for page in page_range %}
+        <li class="page-item"><a class="page-link" href="?page={{page}}">{{page}}</a></li>
+      {% endfor %}
+        
+      
+      {% if contacts.has_next %}
+        <li class="page-item"><a class="page-link" href="?page={{ contacts.next_page_number }}">다음</a></li>
+        <li class="page-item"><a class="page-link" href="?page={{ contacts.paginator.num_pages }}">끝으로</a></li>
+      {% endif %}
+      
+    </ul>
+  </div>
 </section>
 {% endblock %}
+
 
