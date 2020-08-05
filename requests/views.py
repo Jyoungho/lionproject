@@ -73,3 +73,24 @@ def edit(request):
 def delete(request):
     
     return redirect('requests:requests')
+
+@login_required
+def search_requests(request):
+    # context={}
+    qs = Request.objects.all()
+
+    # q = request.GET.get('q', '') # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
+    # if q: # q가 있으면
+    #     qs = qs.filter(title__icontains=q) # 제목에 q가 포함되어 있는 레코드만 필터링
+    # context = {
+    #     #'qs' : qs,
+    #     'q' : q,
+    # }
+    # #print(requests)
+    # print(q)
+    # return render(request, 'requests/requests.html', context)
+    q = request.GET['q']
+    if q:
+        qs = qs.filter(title__contains=q)
+        print(qs)
+    return render(request, 'requests/requests_search.html', {'qs':qs})
