@@ -33,7 +33,7 @@
                     {% for estimate in estimates %}
                         <div class="card" style="width: 100%; margin: 20px;">             
                             <div class="card">
-                                <a href="{% url 'requests:detail' estimate.req_id %}"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
+                                <a href="{% url 'requests:detail' estimate.req_id.id %}"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
                                     <div class="card-header">
                                         {{ estimate.req_id.title }}
                                     </div>
@@ -98,7 +98,7 @@
                     {% for estimate in estimates %}
                         <div class="card" style="width: 100%; margin: 20px;">   
                             <div class="card">
-                                <a href="{% url 'requests:detail' estimate.req_id %}"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
+                                <a href="{% url 'requests:detail' estimate.req_id.id %}"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
                                     <div class="card-header">
                                         {{ estimate.req_id.title }}
                                     </div>
