@@ -76,21 +76,9 @@ def delete(request):
 
 @login_required
 def search_requests(request):
-    # context={}
-    qs = Request.objects.all()
+    qs = Request.objects.all() #모든 요청서를 불러옵니다.
 
-    # q = request.GET.get('q', '') # GET request의 인자중에 q 값이 있으면 가져오고, 없으면 빈 문자열 넣기
-    # if q: # q가 있으면
-    #     qs = qs.filter(title__icontains=q) # 제목에 q가 포함되어 있는 레코드만 필터링
-    # context = {
-    #     #'qs' : qs,
-    #     'q' : q,
-    # }
-    # #print(requests)
-    # print(q)
-    # return render(request, 'requests/requests.html', context)
-    q = request.GET['q']
-    if q:
-        qs = qs.filter(title__contains=q)
-        print(qs)
-    return render(request, 'requests/requests_search.html', {'qs':qs})
+    q = request.GET['q'] #검색어를 받아요
+    if q: #검색어가 있다면
+        qs = qs.filter(title__contains=q) #그 검색어가 속해있는 것만 필터링합니다.
+    return render(request, 'requests/requests_search.html', {'qs':qs}) #그리고 그 정보를 가지고 저 PATH로 가요!
