@@ -27,13 +27,15 @@ def signup_partner(request):
                 prof_img = request.FILES['prof_img']
             nickname=request.POST['nickname'] #닉네임
             tel=request.POST['tel'] #전화번호
-            actv_area=request.POST['postcode_sido']+" "+request.POST['postcode_sigungu'] #활동지역
+            #actv_area=request.POST['postcode_sido']+" "+request.POST['postcode_sigungu'] #활동지역
+            area_sido=request.POST['area_sido']
+            area_sigungu=request.POST['area_sigungu']
             svc_cd=request.POST['svc_cd'] #서비스업종
             work_spc_kind=request.POST['work_spc_kind'] #작업가능공간종류
             user_type='P' #파트너로 타입 지정
             ptr_join_yn='Y' #파트너로 가입한 이력 yes로 만들어줌
 
-            new_user = User_extend(user=user, nickname=nickname, prof_img=prof_img, tel=tel, actv_area=actv_area, svc_cd=svc_cd, work_spc_kind=work_spc_kind, user_type=user_type, ptr_join_yn=ptr_join_yn)
+            new_user = User_extend(user=user, nickname=nickname, prof_img=prof_img, tel=tel, area_sido=area_sido, area_sigungu=area_sigungu, svc_cd=svc_cd, work_spc_kind=work_spc_kind, user_type=user_type, ptr_join_yn=ptr_join_yn)
             new_user.save() #세이브까지!
 
             auth.login(request, user)
@@ -63,13 +65,15 @@ def signup_requester(request):
                 prof_img = request.FILES['prof_img']
             nickname=request.POST['nickname'] #닉네임
             tel=request.POST['tel'] #전화번호
-            actv_area='N' #활동지역
+            #actv_area='N' #활동지역
+            area_sido='N'
+            area_sigungu='N'
             svc_cd='N' #서비스업종
             work_spc_kind='N'
             user_type='R'
             ptr_join_yn='N'
 
-            new_user = User_extend(user=user, nickname=nickname, prof_img=prof_img, tel=tel, actv_area=actv_area, svc_cd=svc_cd, work_spc_kind=work_spc_kind, user_type=user_type, ptr_join_yn=ptr_join_yn)
+            new_user = User_extend(user=user, nickname=nickname, prof_img=prof_img, tel=tel, area_sido=area_sido, area_sigungu=area_sigungu, svc_cd=svc_cd, work_spc_kind=work_spc_kind, user_type=user_type, ptr_join_yn=ptr_join_yn)
             new_user.save() #세이브까지!
 
             auth.login(request, user)
