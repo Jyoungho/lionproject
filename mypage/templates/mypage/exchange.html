@@ -10,6 +10,13 @@
 {% endblock %}
  
 {% block content %}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>파트너 전환</h1>
+        <p class="lead">파트너로 전환하고 서비스를 제공해보세요.</p>
+    </div>
+</header>
   
 <section id="signup_requester">
     {%if error%}
@@ -21,12 +28,9 @@
     <div class="container">
         <div class="row">
             
-            <div class="col-lg-8 mx-auto">
-                <h1>파트너 전환</h1>
-            </div>
             {%if user_extend.prof_img%}
             <div class="col-lg-8 mx-auto">
-                <img width="200" src="{{user_extend.prof_img.url}}" />
+                <img width="100" src="{{user_extend.prof_img.url}}" />
             </div>
             {%endif%}
         </div>

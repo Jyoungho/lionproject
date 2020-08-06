@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 
 def requests(request):
     reqs = Request.objects.all().order_by('-id')
+    user_extend = User_extend.objects.get(user=request.user)
     
     # 페이지 분할#
     page_numbers_range = 5
@@ -27,7 +28,7 @@ def requests(request):
 
     page_range = paginator.page_range[start_index:end_index]
     context = {'reqs' : reqs, 'contacts': contacts,
-    'page_obj':page_obj, 'page':page, 'page_range': page_range}
+    'page_obj':page_obj, 'page':page, 'page_range': page_range, 'user_extend':user_extend}
     return render(request, 'requests/requests.html', context)
 
 @login_required
@@ -77,8 +78,15 @@ def delete(request):
 @login_required
 def search_requests(request):
     qs = Request.objects.all() #모든 요청서를 불러옵니다.
+    search_one=request.GET['search_one']
 
-    q = request.GET['q'] #검색어를 받아요
-    if q: #검색어가 있다면
-        qs = qs.filter(title__contains=q) #그 검색어가 속해있는 것만 필터링합니다.
+    if search_one == '제목':
+        q = request.GET['q'] #검색어를 받아요
+        if q: #검색어가 있다면
+            qs = qs.filter(title__contains=q) #그 검색어가 속해있는 것만 필터링합니다.
+
+    elif search_one == '작성자':
+        q = request.GET['q'] #검색어를 받아요
+        if q: #검색어가 있다면
+            qs = qs.filter(reqr_username__in=q) #username이 왜 숫자로 박혀있죠..?
     return render(request, 'requests/requests_search.html', {'qs':qs}) #그리고 그 정보를 가지고 저 PATH로 가요!

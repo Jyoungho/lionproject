@@ -3,14 +3,17 @@ from django.contrib.auth.models import User
 from django.contrib.auth.hashers import check_password
 from accounts.models import User_extend
 from django.contrib import auth
+from django.contrib.auth.decorators import login_required
 #from .models import Mypage
 
 # Create your views here.
+@login_required
 def index(request):
     user_extend = User_extend.objects.get(user=request.user)
     context = {'user_extend': user_extend}
     return render(request, 'mypage/index.html', context)
 
+@login_required
 def change_pw(request):
     context= {}
     user_extend = User_extend.objects.get(user=request.user) 
@@ -40,11 +43,13 @@ def change_pw(request):
 
     return render(request, "mypage/change_pw.html",context)
 
+@login_required
 def edit(request):
     user_extend = User_extend.objects.get(user=request.user)
     context = {'user_extend': user_extend}
     return render(request, 'mypage/edit.html', context)
 
+@login_required
 def update(request):
     user_extend = User_extend.objects.get(user=request.user)
     user_extend.nickname=request.POST['nickname']
@@ -59,6 +64,7 @@ def update(request):
     user_extend.save()
     return redirect('mypage:index')
 
+@login_required
 def update_exchange(request):
     user_extend = User_extend.objects.get(user=request.user)
     user_extend.user_type='P'

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  <title>User회원가입:철거해줘</title>
+  <title>User회원가입:철거해조</title>
 {% endblock %}
 
 {% load static %}
@@ -10,6 +10,13 @@
 {% endblock %}
  
 {% block content %}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>사용자 회원가입</h1>
+        <p class="lead">철거/원복/에어컨 서비스 요청</p>
+    </div>
+</header>
   
 <section id="signup_requester">
     {%if error%}
@@ -23,8 +30,6 @@
             <div class="col-lg-8 mx-auto">
                 <form method="POST" action="{% url 'accounts:signup_requester' %}" enctype="multipart/form-data">
                     {% csrf_token %}
-
-                    <h1>사용자 회원가입</h1>
 
                     <!--공통: ID(email)만 입력 가능-->
                     <div class="form-group">
