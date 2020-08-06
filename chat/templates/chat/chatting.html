@@ -6,11 +6,10 @@
 
 {% load static %}
 {% block sytle %}
-    <link rel="stylesheet" href="{% static 'chat/style.css' %}" type="text/css" />
+    <link rel="stylesheet" href="{% static 'chat/style_chat.css' %}" type="text/css" />
 {% endblock %}
  
 {% block content %}  
-
         <section id="chatting">
             <div class="container">
                 <div class="row">
@@ -53,13 +52,11 @@
                                         </li>
                                     </ul>
                                 </div>
-
-
-                                
                             </div>
                             {% else %}
                             <div class="chat">
                             </div>
+                            {% endif %}
 
                             <div class="input-div">
                                 <textarea placeholder="Press Enter for send message."></textarea>
@@ -73,26 +70,28 @@
         </section>
 
         <section id="send_message">
-            <div class="form-group">
-            {% if user_extend.user_type == 'R' %} 
-                <form method="POST" action="{% url 'chat:send_message' user_extend.user.id chat_room.ptr.id  %}" id="send_message">
-                    {% csrf_token %}
-                    <div class="inline">
-                        <textarea class="form-control" id="message" rows="3" name="message" placeholder="Write.." ></textarea>
-                        <input class="btn btn-secondary send" type="button"  value="Send"><br>
-                    </div>
-                </form>
+            
+                <div class="form-group">
+                {% if user_extend.user_type == 'R' %} 
+                    <form method="POST" action="{% url 'chat:send_message' user_extend.user.id chat_room.ptr.id  %}" id="send_message">
+                        {% csrf_token %}
+                        <div class="inline">
+                            <textarea class="form-control" id="message" rows="3" name="message" placeholder="Press Enter for send message." ></textarea>
+                            <input class="btn btn-secondary send" type="button"  value="Send"><br>
+                        </div>
+                    </form>
 
-            {% elif user_extend.user_type == 'P' %}
-                <form method="POST" action="{% url 'chat:send_message' chat_room.reqr.id user_extend.user.id  %}" id="send_message">
-                    {% csrf_token %}
-                    <div class="inline">
-                        <textarea class="form-control" id="message" rows="3" name="message" placeholder="Write.." ></textarea>
-                        <button type="submit" class="btn btn-primary">Send</button>
-                    </div>
-                </form> 
-            {% endif %}
-            </div>   
+                {% elif user_extend.user_type == 'P' %}
+                    <form method="POST" action="{% url 'chat:send_message' chat_room.reqr.id user_extend.user.id  %}" id="send_message">
+                        {% csrf_token %}
+                        <div class="inline">
+                            <textarea class="form-control" id="message" rows="3" name="message" placeholder="Press Enter for send message." ></textarea>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </div>
+                    </form> 
+                {% endif %}
+                </div>
+             
         </section>
 
 
