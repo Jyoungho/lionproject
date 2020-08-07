@@ -34,7 +34,7 @@
       </tr>
     </thead>
   
-    {% for req in page_obj %}
+    {% for req in qs %}
     <tbody class = 'table td'>
       <td>{{forloop.counter}}</td>
       <td>{{req.reqr_username}}</td>

@@ -25,4 +25,5 @@ urlpatterns = [
     path('<int:requests_id>/', views.detail, name = 'detail'),
     path('<int:requests_id>/', views.edit, name = 'edit'),
     path('<int:requests_id>/', views.delete, name = 'delete'),
+    path('search_requests/', views.search_requests, name = 'search_requests'),
 ]

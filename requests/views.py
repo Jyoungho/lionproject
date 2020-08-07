@@ -85,10 +85,19 @@ def edit(request):
     return render(request, 'requests/edit.html', context)
 
 @login_required
-def delete(request,req_id):
+def delete(request):
     try:
         req = Request.objects.get(id = req_id, reqr_username = request.user)
     except Request.DoesNotExist:
         return redirect('requests:requests')
     req.delete()
     return redirect('requests:requests')
+
+@login_required
+def search_requests(request):
+    qs = Request.objects.all() #모든 요청서를 불러옵니다.
+
+    q = request.GET['q'] #검색어를 받아요
+    if q: #검색어가 있다면
+        qs = qs.filter(title__contains=q) #그 검색어가 속해있는 것만 필터링합니다.
+    return render(request, 'requests/requests_search.html', {'qs':qs}) #그리고 그 정보를 가지고 저 PATH로 가요!
