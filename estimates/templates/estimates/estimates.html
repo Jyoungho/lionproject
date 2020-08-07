@@ -33,7 +33,7 @@
                     {% for estimate in estimates %}
                         <div class="card" style="width: 100%; margin: 20px;">             
                             <div class="card">
-                                <a href="#"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
+                                <a href="{% url 'requests:detail' estimate.req_id.id %}"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
                                     <div class="card-header">
                                         {{ estimate.req_id.title }}
                                     </div>
@@ -78,7 +78,7 @@
                                                 </div>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                    <button type="button" class="btn btn-primary">채팅하기</button>
+                                                    <a href=""><button type="button" class="btn btn-primary">채팅하기</button></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -98,7 +98,7 @@
                     {% for estimate in estimates %}
                         <div class="card" style="width: 100%; margin: 20px;">   
                             <div class="card">
-                                <a href="#"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
+                                <a href="{% url 'requests:detail' estimate.req_id.id %}"> <!-- 요청서 제목 클릭시 요청서 상세보기로 이동 -->
                                     <div class="card-header">
                                         {{ estimate.req_id.title }}
                                     </div>
@@ -174,7 +174,7 @@
                     <div class="col-lg-8 mx-auto">
                         {% if user_extend.user_type == 'R' %}
                             <h2>아직 받은 견적서가 없습니다</h2>
-                            <a href="#" class="btn btn-primary">어디로가지</a>
+                            <a href="#" class="btn btn-primary">내 요청서 확인하기</a>
                         {% elif user_extend.user_type == 'P' %}
                             <h2>아직 보낸 견적서가 없습니다</h2>
                             <a href="#" class="btn btn-primary">내 주변 요청서 둘러보기</a>

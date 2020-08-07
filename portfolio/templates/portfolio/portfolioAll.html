@@ -1,11 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-    {% if user_extend.user_type == 'R' %}
     <title>{{ ptr_info.biz_nm }}: 철거해조</title>
-    {% elif user_extend.user_type == 'P' %}
-    <title>나의 포트폴리오: 철거해조</title>
-    {% endif %}
 {% endblock %}
 
 {% load static %}
@@ -14,7 +10,6 @@
 {% endblock %}
  
 {% block content %}
-    {% if user_extend.user_type == 'R' %}
     <section id="ptr_info">
         <div class="container">
             <div class="row">
@@ -44,15 +39,7 @@
             </div>
         </div>
     </section> 
-    {% elif user_extend.user_type == 'P' %}
-        <header class="bg-primary text-white">
-            <div class="container text-center">
-                <h3>나의 포트폴리오를 관리해보세요!</h3>
-                <br>
-                <a href="{% url 'portfolio:new' %}" class="btn btn-light">포트폴리오 추가</a>
-            </div>
-        </header>
-    {% endif %}       
+    
 
 
 <section id="detail">
@@ -89,9 +76,6 @@
                     </div>
                 {% else %}
                     <h2>아직 등록된 포트폴리오가 없습니다.</h2>
-                    {% if user_extend.user_type == 'P' %}
-                        <a href="{% url 'portfolio:new' %}" class="btn btn-link">포트폴리오를 만들어보세요!</a>
-                    {% endif %}
                 {% endif %}    
             </div>
         </div>

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>파트너 센터: 철거해조</title>
+{% endblock %}
+
+{% load static %}
+{% block sytle %}
+    <link rel="stylesheet" href="{% static 'chat/style.css' %}" type="text/css" />
+{% endblock %}
+ 
+{% block content %}
+    <header class="bg-primary text-white">
+        <div class="container text-center">
+            <h1>철거해조에 등록된 파트너입니다</h1>
+        </div>
+    </header>
+        <section id="partners">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        {% for partner in partners %}
+                                    
+                                        <div class="card mb-3" style="width: 100%;">
+                                            <div class="row no-gutters">
+                                                <!-- 파트너 프로필 사진 -->
+                                                <div class="col-md-2" >
+                                                    {% if partner.prof_img %}
+                                                        <img src="{{ partner.prof_img.url }}" class="card-img" alt="...">
+                                                    {% endif %}
+                                                </div>
+                                                <!--파트너 정보-->
+                                                <div class="col-md-9">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ partner.biz_nm }}</h5>
+                                                        <p class="card-text">제공 서비스 : {{ partner.svc_cd }}</p>
+                                                        <p class="card-text">활동 지역 : {{ partner.area_sido }} {{ partner.area_sigungu }}</p>
+                                                        <p class="card-text">경력 : {{ partner.career }}</p>
+                                                        <div class="text-right">
+                                                            <a href="{% url 'portfolio:list_forAll' partner.user.id %}"><button type="button" class="btn btn-primary">{{ partner.biz }}의 포트폴리오</button></a> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                               
+                        {% endfor %}
+
+                    </div>
+                </div>        
+            </div>  
+        </section>
+
+{% endblock %}

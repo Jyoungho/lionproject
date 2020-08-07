@@ -8,6 +8,32 @@ from .models import Portfolio, Portfolio_img
 from .forms import PortfolioForm, PortfolioImgForm
 
 
+def portfolioList_forAll(request, ptr_id): # 파트너 클릭 시 파트너 정보 넘어옴(User ,User_extend)
+    main_images = Portfolio_img.objects.none()
+    ptr_info = User_extend.objects.get(id=ptr_id)
+    portfolios = Portfolio.objects.filter(ptr_username_id=ptr_id)
+
+    for portfolio in portfolios:
+        main_image = Portfolio_img.objects.filter(portfolio_id=portfolio.id).filter(main_yn='Y')
+        main_images = main_images.union(main_image)
+
+    if not request.user.is_authenticated:
+        context = {
+            'ptr_info' : ptr_info,
+            'portfolios' : portfolios,
+            'main_images' : main_images,
+        }
+    else:
+        user_extend = User_extend.objects.get(user=request.user)
+        context = {
+            'ptr_info' : ptr_info,
+            'user_extend' : user_extend,
+            'portfolios' : portfolios,
+            'main_images' : main_images,
+        }
+    return render(request, 'portfolio/portfolioAll.html', context)
+
+
 @login_required
 def portfolioList_forR(request, estimate_id): # 파트너 클릭 시 파트너 정보 넘어옴(User ,User_extend)
     main_images = Portfolio_img.objects.none()

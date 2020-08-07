@@ -51,6 +51,12 @@
             <li class="nav-item">
               <a class="nav-link login-menu" href="{%url 'requests:requests' %}">요청서 둘러보기</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link login-menu" href="{% url 'home:partners' %}">파트너 둘러보기</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link login-menu" href="{%url 'chat:chat_rooms' %}">채팅</a>
+            </li>
 ​
             <!--파트너로 로그인 했을 때-->
             {% elif user_extend.user_type == 'P' %}
@@ -60,18 +66,21 @@
             <li class="nav-item">
               <a class="nav-link login-menu" href="{% url 'requests:requests' %}">요청서 둘러보기</a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link login-menu" href="{% url 'home:partners' %}">파트너 둘러보기</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link login-menu" href="{% url 'chat:chat_rooms' %}">채팅</a>
+            </li>
             {% endif %}
 ​
           <!--로그인 안했을 때-->
           {% else %}
             <li class="nav-item">
-              <a class="nav-link" href='requests/'>게시판</a>
+              <a class="nav-link" href="{% url 'requests:requests' %}">요청서 둘러보기</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#services">이건뭐였지</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#contact">이건또뭐였지</a>
+              <a class="nav-link" href="{% url 'home:partners' %}">파트너 둘러보기</a>
             </li>
           {% endif %}
 ​
@@ -90,6 +99,7 @@
                         <a class="dropdown-item" href="{% url 'mypage:index' %}">My Page</a>
                         <!--요청자로 로그인 했을 때-->
                         {% if user_extend.user_type == 'R' %}
+                          <a class="dropdown-item" href="#">나의 요청서</a>
                           <a class="dropdown-item" href="{%url 'requests:new' %}">요청서 작성</a>
                           <form action="{% url 'accounts:exchange' %}" method="POST">
                             {% csrf_token %}

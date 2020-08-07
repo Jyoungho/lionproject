@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}
+    <title>채팅: 철거해조</title>
+{% endblock %}
+
+{% load static %}
+{% block sytle %}
+    <link rel="stylesheet" href="{% static 'chat/style.css' %}" type="text/css" />
+{% endblock %}
+ 
+{% block content %}
+    <header class="bg-primary text-white">
+        <div class="container text-center">
+            <h1>채팅</h1>
+        </div>
+    </header>
+
+    
+    {% if chat_rooms %}
+        <section id="chat_rooms">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                    <!-- 요청자로 로그인 시 : 파트너 정보 가져와야 함-->
+                    {% if user_extend.user_type == 'R' %}        
+                        {% for chat_room in chat_rooms %}
+                            {% for ptr_info_extend in ptr_info_extends %}
+                                {% if ptr_info_extend.user == chat_room.ptr %}
+                                    <a href="{% url 'chat:chat' user_extend.user.id ptr_info_extend.user.id %}"> <!--카드 누르면 채팅방 안으로 들어감-->
+                                        <!--bootstrap card >> 반복되야하는 부분-->
+                                        <div class="card mb-3" style="width: 100%;">
+                                            <div class="row no-gutters">
+                                                <!-- 상대방(=파트너) 프로필 사진 -->
+                                                <div class="col-md-2" >
+                                                    {% if ptr_info_extend.prof_img %}
+                                                        <img src="{{ ptr_info_extend.prof_img.url }}" class="card-img" alt="...">
+                                                    {% endif %}
+                                                </div>
+                                                <!--상대방(=파트너) 정보-->
+                                                <div class="col-md-9">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ ptr_info_extend.biz_nm }}</h5>
+                                                        <p class="card-text">제공 서비스 : {{ ptr_info_extend.svc_cd }}</p>
+                                                        <p class="card-text">활동 지역 : {{ ptr_info_extend.area_sido }} {{ ptr_info_extend.area_sigungu }}</p>
+                                                        <p class="card-text">경력 : {{ ptr_info_extend.career }}</p>
+                                                        {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>  
+                                {% endif %}
+                            {% endfor %}           
+                        {% endfor %}
+
+                    <!-- 파트너로 로그인 시 : 요청자 정보 가져와야 함 -->
+                    {% elif user_extend.user_type == 'P' %}
+                        {% for chat_room in chat_rooms %}
+                            {% for reqr_info_extend in reqr_info_extends %}
+                                {% if reqr_info_extend.user == chat_room.reqr %}
+                                    <a href="{% url 'chat:chat' reqr_info_extend.user.id user_extend.user.id %}"> <!--카드 누르면 채팅방 안으로 들어감-->
+                                        <!--bootstrap card >> 반복되야하는 부분-->
+                                        <div class="card mb-3" style="width: 100%;">
+                                            <div class="row no-gutters">
+                                                <!-- 상대방(=고객) 프로필 사진 -->
+                                                <div class="col-md-2" >
+                                                    {% if reqr_info_extend.prof_img %}
+                                                        <img src="{{ reqr_info_extend.prof_img.url }}" class="card-img" alt="...">
+                                                    {% endif %}
+                                                </div>
+                                                <!--상대방(=파트너) 정보-->
+                                                <div class="col-md-9">
+                                                    <div class="card-body">
+                                                        <h5 class="card-title">{{ reqr_info_extend.biz_nm }}</h5>
+                                                        {% comment %} <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>  
+                                {% endif %}
+                            {% endfor %}              
+                        {% endfor %}
+                    {% endif %}
+                    </div>
+                </div>        
+            </div>  
+        </section>
+
+    <!-- 채팅방이 없을 경우 -->
+    {% else %} 
+        <section id="about">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 mx-auto">
+                        {% if user_extend.user_type == 'R' %}
+                            <h3>현재 진행 중인 대화가 없습니다.</h3>
+                            <p>받은 견적서에서 파트너에게 메세지를 보내보세요.</p>
+                            <a href="{% url 'estimates:list' %}" class="btn btn-primary">받은 견적서 확인</a>
+                        {% elif user_extend.user_type == 'P' %}
+                            <h3>현재 진행 중인 대화가 없습니다.</h3>
+                            <p>주변 요청서를 살펴보고 요청자에게 메세지를 보내보세요.</p>
+                            <a href="#" class="btn btn-primary">내 주변 요청서 둘러보기</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+
+{% endblock %}
