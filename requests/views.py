@@ -75,8 +75,8 @@ def detail(request, requests_id):
     req = Request.objects.get(id=requests_id)
     reqr_info = User.objects.get(id = req.reqr_username.id)
     reqr_info_extend = User_extend.objects.get(user = reqr_info)
-    user_extend = User_extend.objects.filter(user_id = req.reqr_username_id)
-    context = {'req' : req, 'reqr_info_extend' : reqr_info_extend}
+    user_extend = User_extend.objects.get(user = request.user)
+    context = {'req' : req, 'reqr_info_extend' : reqr_info_extend,'user_extend' : user_extend}
     return render(request, 'requests/detail.html', context)
 
 @login_required
