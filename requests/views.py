@@ -24,10 +24,15 @@ def requests(request):
     max_index = len(paginator.page_range)
     if end_index >= max_index:
         end_index = max_index
-
     page_range = paginator.page_range[start_index:end_index]
+    
+    if not request.user.is_authenticated:
+        user_extend = User_extend.objects.none()
+    else:
+        user_extend = User_extend.objects.get(user=request.user)
+    
     context = {'reqs' : reqs, 'contacts': contacts,
-    'page_obj':page_obj, 'page':page, 'page_range': page_range}
+    'page_obj':page_obj, 'page':page, 'page_range': page_range, 'user_extend': user_extend}
     return render(request, 'requests/requests.html', context)
 
 @login_required
