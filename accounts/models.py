@@ -24,5 +24,5 @@ class User_extend(models.Model):
     mod_dtti = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        return f'{self.user}, user_id: {self.id}, nickname: {self.nickname} | {self.actv_area}'
+        return f'{self.user}, user_id: {self.id}, nickname: {self.nickname}'
 

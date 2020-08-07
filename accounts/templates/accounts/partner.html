@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-  <title>파트너회원가입:철거해줘</title>
+  <title>파트너회원가입:철거해조</title>
 {% endblock %}
 
 {% load static %}
@@ -10,6 +10,13 @@
 {% endblock %}
  
 {% block content %}
+
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>파트너 회원가입</h1>
+        <p class="lead">철거/원복/에어컨 서비스 제공</p>
+    </div>
+</header>
   
 <section id="signup_partner">
     {%if error%}
@@ -24,10 +31,9 @@
                 <form method="POST" action="{% url 'accounts:signup_partner' %}" enctype="multipart/form-data">
                     {% csrf_token %}
 
-                    <h1>파트너 회원가입</h1>
                     {%if user_extend.prof_img%}
                     <div class="col-lg-8 mx-auto">
-                        <img width="200" src="{{user_extend.prof_img.url}}" />
+                        <img width="100" src="{{user_extend.prof_img.url}}" />
                     </div>
                     {%endif%}
 

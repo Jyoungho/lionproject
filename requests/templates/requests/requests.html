@@ -65,24 +65,24 @@
       
     </ul>
   </div>
-  <!--
-  <div class='col-lg-8 max-auto'>
-    <div class="form-group">
-      <label class="label" for="area_sido">시/도검색샘플</label>
-      <select class="form-control" id="area_sido" name="area_sido">
-          <option selected>{{user_extend.area_sido}}</option>
-          <option value="철거">철거</option>
-          <option value="원복">원복</option>
-          <option value="에어컨">에어컨</option>
-          <option value="철거/원복">철거/원복</option>
-          <option value="철거/원복/에어컨">철거/원복/에어컨</option>
-      </select>
-  </div>
-  -->
 
-  <form action="{% url 'requests:search_requests' %}" method="GET">
-    <input type="search" name="q" value="{{ q }}">
-    <input type="submit" value="검색">
+  <form class="form-group" action="{% url 'requests:search_requests' %}" method="GET">
+    <select class="form-control-sm" id="search_one" name="search_one" >
+    
+      <option value="제목" selected>제목</option>
+      <option value="작성자">작성자</option>
+      <option value="위치">위치</option>
+      <option value="날짜">날짜</option>
+    </select>
+    {%if search_one == '날짜'%}
+    <input class="form-control-sm" type="date" name="q" value="{{ q }}">
+    <div class="input-group-append">
+      <button class="btn btn-outline-secondary" type="button">Button</button>
+    </div>
+    {%else%}
+    <input class="form-control-sm" type="text" name="q" value="{{ q }}">
+    {%endif%}
+    <input class="btn btn-secondary" type="submit" value="검색">
   </form>
   
 

@@ -11,6 +11,13 @@
 
 {% block content %}
 
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>패스워드 변경</h1>
+        <p class="lead"></p>
+    </div>
+</header>
+
 <section id="mypage_change">
     {%if error%}
         <div class="alert alert-danger" role="alert">
@@ -23,8 +30,6 @@
             <div class="col-lg-8 mx-auto">
                 <form method="POST" action="{% url 'mypage:change_pw' %}">
                     {% csrf_token %}
-
-                    <h1>패스워드 변경</h1>
 
                     <!--현재 패스워드-->
                     <div class="form-group">
