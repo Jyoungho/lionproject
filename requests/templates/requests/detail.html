@@ -20,63 +20,148 @@
   </div>
 </header>
 -->
-<section class = 'col-lg-8 mx-auto'>
-  <h2>상세페이지</h2>
-  {% if req %}
-  <div><h3>작성자</h3>
-    <p>{{reqr_info_extend.nickname}}</p>
+
+
+<section id = 'detail'>
+  <div class = "container">
+    <div class = "row">
+      <div class = "col-lg-8 mx-auto">
+        {% if req %}
+        <h3 sytle = "text-center"> 상세페이지 </h3>
+        </br>
+        <div>
+          <ul>
+            <li>
+              <h5>작성자</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{reqr_info_extend.nickname}}</p>
+        </div>
+        <!-- 제목 -->
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>제목</h5>
+            </li>
+          </ul>
+            <p style = "font-size : 20px">- {{req.title}}</p>
+        </div>
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>본문</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{req.cont}}</p>
+        </div>
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>장소</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{req.area_sido}} / {{req.area_sigungu}}</p>
+        </div>
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>분야</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{req.svc_cd}}</p>
+        </div>
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>작업종류</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{req.work_spc_kind}}</p>
+        </div>
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>엘레베이터 여부</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{req.elev_psb_yn}}</p>
+        </div>
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>사이즈</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{req.size}}</p>
+        </div>
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>층수</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{req.floor}}</p>
+        </div>
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>작업요청 기간</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{req.work_stt_dt}} ~ {{req.work_end_dt}}</p>
+        </div>
+        <!-- Image (슬라이드 형식)-->                
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+            <ol class="carousel-indicators">
+                {% for image in images %}
+                    <li data-target="#carouselExampleIndicators" data-slide-to="{{ forloop.counter }}" class="{% if forloop.first %}active{% endif %}"></li>
+                {% endfor %}
+            </ol>
+            <div class="carousel-inner">
+                {% for image in images %}
+                    <div class="carousel-item{% if forloop.first %} active{% endif %}">
+                        <img class="d-block w-100" src="{{ image.img.url }}" alt="">
+                    </div>
+                {% endfor %}
+            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+            </a>
+          </div>
+        <!--End Image-->
+
+
+        <div class = "from-group">
+          <ul>
+            <li>
+              <h5>게시일</h5>
+            </li>
+          </ul>
+          <p style = "font-size : 20px">- {{req.mod_dtti}}</p>
+      </div>
+
+      
+        {% endif %}
+        {% if user_extend.user_type == 'P' %}
+        <div class="text-right">
+          <a  href="{% url 'estimates:new' req.id %}"><button type="button" class="btn btn-primary">견적서 보내기</button></a>
+        </div>
+        {% endif %}
+      
+        {% if request.user == req.reqr_username %}
+        <div>
+          <a class = "btn btn-primary" href = "{% url 'requests:edit' req.id %}">게시물 수정</a>
+          <a class = "btn btn-primary" href = "{% url 'requests:delete' req.id %}">게시물 삭제</a>
+        </div>
+        {% endif %}
+      </div>
+    </div>
   </div>
-  <p>------------------------</p>
-  <div><h3>제목</h3>
-    <p>{{req.title}}</p>
-  </div>
-  <p>------------------------</p>
-  <div><h3>본문</h3>
-      <p>{{req.cont}}</p>
-  </div>
-  <p>------------------------</p>
-  <div><h3>일하는 구역</h3>
-    <p>{{req.req_area}}</p>
-  </div>
-  <p>------------------------</p>
-  <div>분야
-    <p>{{req.svc_cd}}</p>
-  </div>
-  <p>------------------------</p>
-  <div>작업종류
-    <p>{{req.work_spc_kind}}</p>
-  </div>
-  <p>------------------------</p>
-  <div>엘레베이터 여부
-    <p>{{req.elev_psb_yn}}</p>
-  </div>
-  <p>------------------------</p>
-  <div>크기
-    <p>{{req.size}}</p>
-  </div>
-  <p>------------------------</p>
-  <div>층수
-    <p>{{req.floor}}</p>
-  </div>
-  <p>------------------------</p>
-  <div> 견적서 요청기간 : {{req.req_exp_stt_dt}} ~ {{req.req_exp_end_dt}}</div>
-  <p>------------------------</p>
-  <div> 작업가능 기간 : {{req.work_stt_dt}} ~ {{req.work_end_dt}}</div>
-  <p>------------------------</p>
-  <div> 게 시 일 : {{req.mod_dtti}}</div>
-  {% endif %}
-  
-  {% if user_extend.user_type == 'P' %}
-  <div class="text-right">
-    <a  href="{% url 'estimates:new' req.id %}"><button type="button" class="btn btn-primary">견적서 보내기</button></a>
-  </div>
-  {% endif %}
-  {{req.id}}
-  {% if request.user == req.reqr_username %}
-  <div>
-    <a class = "btn btn-primary" href = "{% url 'requests:delete' req.id %}">게시물 삭제</a>
-  </div>
-  {% endif %}
-</section>
+ 
 {% endblock %}
 
