@@ -6,7 +6,7 @@ from portfolio.models import Portfolio
 from .models import Chat_room, Chat_message
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
-import simplejson as json
+
 
 
 @login_required

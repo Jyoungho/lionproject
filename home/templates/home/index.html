@@ -8,6 +8,7 @@
 {% load static %}
 
 {% block sytle %}
+  <link rel="stylesheet" href="{% static 'portfolio/style.css' %}" type="text/css" />
 {% endblock %}
  
 
@@ -26,38 +27,17 @@
       <div class="row">
         <div class="col-lg-8 mx-auto">
           <h2>철거/원복/에어컨설치 서비스를 쉽게 찾아보세요!</h2>
-          {% comment %} <img src="media/image_a.jpg"> {% endcomment %}
+          <br><br>
           {% comment %} <p class="lead">철거/원복/에어컨설치 서비스를 쉽게 찾아보세요! </p> {% endcomment %}
-          <a class="nav-link" href="{% url 'requests:requests' %}">요청서 둘러보기</a>
-          <a class="nav-link" href="{% url 'home:partners' %}">파트너 둘러보기</a>
-          <div class="row">
-              <div class="col-sm-6">
-                  <div class="card text-center">
-                      <div class="card-body">
-                          <h5 class="card-title">요청서를 작성해보세요</h5>
-                          <br>
-                             
-                          <a href="{%url 'accounts:partner' %}"><button type="submit"
-                                  class="btn btn-primary">가입하기</button></a>
-                      </div>
-                  </div>
-              </div>
-              <div class="col-sm-6">
-                  <div class="card text-center">
-                      <div class="card-body">
-                          <h5 class="card-title">사용자 회원</h5>
-                          <p class="card-text">철거/원복/에어컨 서비스가 필요하신가요? <br>
-                              사용자로 가입해 서비스를 요청해보세요.</p>
-                          <a href="{%url 'accounts:requester' %}"><button type="submit"
-                                  class="btn btn-primary">가입하기</button></a>
-                      </div>
-                  </div>
-              </div>
+          <div class="inline">
+            <a class="" href="{% url 'requests:requests' %}"><button type="submit" class="btn btn-primary">> 요청서 둘러보기</button></a>
+            <a class="" href="{% url 'home:partners' %}"><button type="submit" class="btn btn-primary">> 파트너 둘러보기</button></a>
           </div>
-        
         </div>
       </div>
     </div>
+  </section>
+  <section id="about" >
   </section>
 
   {% comment %} <section id="services" class="bg-light">
