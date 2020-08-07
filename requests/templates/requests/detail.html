@@ -66,6 +66,17 @@
   <div> 게 시 일 : {{req.mod_dtti}}</div>
   {% endif %}
   
+  {% if user_extend.user_type == 'P' %}
+  <div class="text-right">
+    <a  href="{% url 'estimates:new' req.id %}"><button type="button" class="btn btn-primary">견적서 보내기</button></a>
+  </div>
+  {% endif %}
+  {{req.id}}
+  {% if request.user == req.reqr_username %}
+  <div>
+    <a class = "btn btn-primary" href = "{% url 'requests:delete' req.id %}">게시물 삭제</a>
+  </div>
+  {% endif %}
 </section>
 {% endblock %}
 

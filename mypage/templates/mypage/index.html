@@ -1,37 +1,123 @@
 {% extends "base.html" %}
 
 {% block title %}
-  <title>MyPage:철거해줘</title>
+<title>MyPage:철거해줘</title>
 {% endblock %}
 
 {% load static %}
 
 {% block sytle %}
 {% endblock %}
- 
+
 {% block content %}
-  
-<section id="mypage">
-    {%if error%}
-        <div class="alert alert-danger" role="alert">
-            {{error}}
-        </div>
-    {%endif%}
 
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h1>mypage</h1>
-
-                <div class="form-group">
-                    <h2>index</h2>
-                    <h2>{{user.username}}</h2>
-                    <h2><a href=" /mypage/{{user.id }}">마이페이지이동</a></h2>
-                </div>
-            </div>
-        </div>
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>My Page</h1>
+        <p class="lead">{{user_extend.nickname}}님의 My Page</p>
     </div>
+</header>
+
+<section class="col-lg-8 mx-auto" id="mypage_index">
+    <!--{%if error%}
+    <div class="alert alert-danger" role="alert">
+        {{error}}
+    </div>
+    {%endif%}-->
+
+
+    {% if user %}
+        <div class="container">
+            <!-- <div class="row">
+                <div class="col-lg-8 mx-auto">
+                    <h2 style="text-align: center;">{{user_extend.nickname}}의 My Page</h2>
+                </div>
+                
+                <div class="col-lg-8 mx-auto">
+                    <h3>ID</h3>
+                    <p>{{ user.username }}</p>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <h3>패스워드</h3>
+                    <a href="{% url 'mypage:change_pw'%}"><p>수정</p></a>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <h3>닉네임</h3>
+                    <p>{{ user_extend.nickname }}</p>
+                </div>
+                {%if user_extend.prof_img %}
+                <div class="col-lg-8 mx-auto">
+                    <h3>프로필 사진</h3>
+                    <img width="100" src="{{user_extend.prof_img.url }}" />
+                </div>
+                {%endif%}
+                <div class="col-lg-8 mx-auto">
+                    <h3>전화번호</h3>
+                    <p>{{ user_extend.tel }}</p>
+                </div>
+
+                {% if user_extend.user_type == 'P' %}
+                <div class="col-lg-8 mx-auto">
+                    <h3>활동지역</h3>
+                    <p>{{ user_extend.area_sido }} {{ user_extend.area_sigungu }}</p>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <h3>업종</h3>
+                    <p>{{ user_extend.svc_cd }}</p>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <h3>서비스가능지역</h3>
+                    <p>{{ user_extend.work_spc_kind }}</p>
+                </div>
+                {% endif %}
+                <div class="col-lg-8 mx-auto">
+                    <a href="{% url 'mypage:edit' %}"><button type="submit" class="btn btn-primary">정보수정</button></a>
+                </div>
+            </div> -->
+            <!-- <div class="col-lg-8 mx-auto"> -->
+                <div class="col-lg-8 mx-auto">
+                <dl class="row">
+                    <dt class="col-sm-3" style="font-size:x-large">User ID</dt>
+                    <dd class="col-sm-9" style="font-size:x-large; margin-bottom:20px;">{{ user.username }}</dd>
+            
+                    <dt class="col-sm-3" style="font-size:x-large">패스워드</dt>
+                    <dd class="col-sm-9" style="font-size:x-large; margin-bottom:20px;">
+                        <a href="{% url 'mypage:change_pw'%}"><p>수정하기</p></a>
+                    </dd>
+                    
+                    {%if user_extend.prof_img %}
+                    <dt class="col-sm-3" style="font-size:x-large">프로필 사진</dt>
+                    <dd class="col-sm-9" style="margin-bottom:20px;"><img width="100" src="{{user_extend.prof_img.url }}" /></dd>
+                    {%endif%}
+
+                    <dt class="col-sm-3" style="font-size:x-large">전화번호</dt>
+                    <dd class="col-sm-9" style="font-size:x-large; margin-bottom:20px;">{{ user_extend.tel }}</dd>
+
+                    {% if user_extend.user_type == 'P' %}
+                    
+                    <dt class="col-sm-3" style="font-size:x-large">활동지역</dt>
+                    <dd class="col-sm-9" style="font-size:x-large; margin-bottom:20px;">{{ user_extend.area_sido }} {{ user_extend.area_sigungu }}</dd>
+                    
+                    <dt class="col-sm-3" style="font-size:x-large">업종</dt>
+                    <dd class="col-sm-9" style="font-size:x-large; margin-bottom:20px;">{{ user_extend.svc_cd }}</dd>
+                    
+                    <dt class="col-sm-3" style="font-size:x-large">서비스지역</dt>
+                    <dd class="col-sm-9" style="font-size:x-large; margin-bottom:20px;">{{ user_extend.work_spc_kind }}</dd>
+                    {% endif %} 
+                </dl>
+                <a href="{% url 'mypage:edit' %}"><button type="submit" class="btn btn-primary">정보수정</button></a>
+                </div>
+            <!-- </div> -->
+        </div>
+
+        
+
+    {% else %}
+    <div class="container">
+        <h2>등록된 유저가 없습니다.</h2>
+    </div>
+    {% endif %}
+
 </section>
 
 {% endblock %}
-

@@ -34,7 +34,7 @@
       </tr>
     </thead>
   
-    {% for req in page_obj %}
+    {% for req in qs %}
     <tbody class = 'table td'>
       <td>{{forloop.counter}}</td>
       <td>{{req.reqr_username}}</td>
@@ -68,20 +68,12 @@
 
   <form class="form-group" action="{% url 'requests:search_requests' %}" method="GET">
     <select class="form-control-sm" id="search_one" name="search_one" >
-    
       <option value="제목" selected>제목</option>
       <option value="작성자">작성자</option>
       <option value="위치">위치</option>
       <option value="날짜">날짜</option>
     </select>
-    {%if search_one == '날짜'%}
-    <input class="form-control-sm" type="date" name="q" value="{{ q }}">
-    <div class="input-group-append">
-      <button class="btn btn-outline-secondary" type="button">Button</button>
-    </div>
-    {%else%}
     <input class="form-control-sm" type="text" name="q" value="{{ q }}">
-    {%endif%}
     <input class="btn btn-secondary" type="submit" value="검색">
   </form>
   

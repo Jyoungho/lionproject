@@ -15,7 +15,8 @@
     <div class="container">
         <div class="row">   
             <div class="col-lg-8 mx-auto">
-
+                <h3>포트폴리오 수정</h3>
+                    <br><br>
                 <!-- Image (슬라이드 형식)-->                
                 <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                     <ol class="carousel-indicators">
@@ -40,12 +41,10 @@
                     </a>
                 </div>
                 <!--End Image-->
-
+                <br><br>
                 <form method="POST" action="{% url 'portfolio:edit' portfolio.id %}" id="portfolio" enctype="multipart/form-data">
                     {% csrf_token %}
 
-                    <h4>포트폴리오 수정</h4>
-                    <br><br>
                     <!--견적서 제목-->
                     <div class="form-group">
                         <label class="label" for="title">제목</label>
@@ -54,9 +53,37 @@
 
                     <!--작업 지역 : 시군구 데이터 가져오기 (2칸으로 나눠서??)-->
                     <div class="form-group">
-                        <label class="label" for="area">작업 지역</label>
-                        <input class="form-control" type="text" id="area" name="area" value="{{ portfolio.area }}" required>
+                        <label class="label" for="area">작업 지역</label><br>
+                        <div class="inline">
+                            <input class="form-control juso" type="text" id="sample5_address" value="{{ portfolio.area }}" required>
+                            <input class="btn btn-secondary search" type="button" onclick="sample5_execDaumPostcode()" value="주소 검색"><br>
+                        </div>
+                        <div class="inline">
+                            <input  class="form-control sido" type="text" id="postcode_sido" name="postcode_sido" value="{{ sido }}" required>
+                            <input  class="form-control sigungu" type="text" id="postcode_sigungu" name="postcode_sigungu" value="{{ sigungu|join:' ' }}" required>
+                        </div>
                     </div>
+
+                    <script src="https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+                    <script>
+                        
+                        function sample5_execDaumPostcode() {
+                            new daum.Postcode({
+                                oncomplete: function(data) {
+                                    
+                                    var addr = data.address; // 최종 주소 변수
+                                    var sido = data.sido;
+                                    var sigungu = data.sigungu;
+
+                                    // 주소 정보를 해당 필드에 넣는다.
+                                    document.getElementById("sample5_address").value = addr;
+                                    document.getElementById("postcode_sido").value = sido;
+                                    document.getElementById("postcode_sigungu").value = sigungu;
+
+                                }
+                            }).open();
+                        }
+                    </script>
 
                     <!--서비스 코드 : select로 선택(철거, 원복, 철거/원복, 에어컨설치)-->
                     <div class="form-group">
