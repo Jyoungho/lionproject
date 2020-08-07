@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-<title>회원가입:철거해줘</title>
+<title>회원가입:철거해조</title>
 {% endblock %}
 
 {% load static %}
@@ -11,21 +11,41 @@
 
 {% block content %}
 
-<section id="signup">
+<header class="bg-primary text-white">
+    <div class="container text-center">
+        <h1>회원가입</h1>
+        <p class="lead">철거해조 서비스 가입</p>
+    </div>
+</header>
+
+<section class="col-lg-8 mx-auto" id="signup">
     {%if error%}
     <div class="alert alert-danger" role="alert">
         {{error}}
     </div>
     {%endif%}
-
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 mx-auto">
-                <h1>회원가입</h1>
-
-                <!--공통: 회원가입버튼-->
-                <a href="{%url 'accounts:partner' %}"><button type="submit" class="btn btn-primary">파트너 가입</button></a>
-                <a href="{%url 'accounts:requester' %}"><button type="submit" class="btn btn-primary">일반유저 가입</button></a>
+    <!--공통: 회원가입버튼-->
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">파트너 회원</h5>
+                    <p class="card-text">철거/원복/에어컨 관련 전문가이신가요? <br>
+                        파트너로 가입해 서비스를 제공해보세요.</p>
+                    <a href="{%url 'accounts:partner' %}"><button type="submit"
+                            class="btn btn-primary">가입하기</button></a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">사용자 회원</h5>
+                    <p class="card-text">철거/원복/에어컨 서비스가 필요하신가요? <br>
+                        사용자로 가입해 서비스를 요청해보세요.</p>
+                    <a href="{%url 'accounts:requester' %}"><button type="submit"
+                            class="btn btn-primary">가입하기</button></a>
+                </div>
             </div>
         </div>
     </div>
