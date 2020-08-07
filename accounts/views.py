@@ -26,6 +26,8 @@ def signup_partner(request):
             prof_img = None
             if 'prof_img' in request.FILES:
                 prof_img = request.FILES['prof_img']
+            else:
+                prof_img = 'profile/icon.png'
             nickname=request.POST['nickname'] #닉네임
             tel=request.POST['tel'] #전화번호
             #actv_area=request.POST['postcode_sido']+" "+request.POST['postcode_sigungu'] #활동지역

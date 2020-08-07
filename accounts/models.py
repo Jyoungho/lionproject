@@ -6,7 +6,7 @@ class User_extend(models.Model):
     user = models.OneToOneField(User, null=False, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=20, null=False)
     tel = models.CharField(max_length=15, null=False)
-    prof_img = models.ImageField(upload_to='profile', null=True)
+    prof_img = models.ImageField(upload_to='profile', default='icon.png')
     ptr_join_yn = models.CharField(max_length=1, null=False)
     biz_nm = models.CharField(max_length=200, null=True)
     #actv_area = models.CharField(max_length=100, null=False)

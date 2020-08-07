@@ -12,72 +12,53 @@
  
 
 {% block content %}
-  <!-- Full Page Intro -->
-          <div class="view" style="background-image: url('https://mdbootstrap.com/img/Photos/Others/img%20%2848%29.jpg'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-            <!-- Mask & flexbox options-->
-            <div class="mask rgba-black-light align-items-center">
-              <!-- Content -->
-              <div class="container">
-                <!--Grid row-->
-                <div class="row">
-                  <!--Grid column-->
-                  <div class="col-md-12 mb-4 white-text text-center">
-                    <h1 class="h1-reponsive white-text text-uppercase font-weight-bold mb-0 pt-md-5 pt-5 wow fadeInDown" data-wow-delay="0.3s"><strong>Minimalist intro</strong></h1>
-                    <hr class="hr-light my-4 wow fadeInDown" data-wow-delay="0.4s">
-                    <h5 class="text-uppercase mb-4 white-text wow fadeInDown" data-wow-delay="0.4s"><strong>Photography & design</strong></h5>
-                    <a class="btn btn-outline-white wow fadeInDown" data-wow-delay="0.4s">portfolio</a>
-                    <a class="btn btn-outline-white wow fadeInDown" data-wow-delay="0.4s">About me</a>
-                  </div>
-                  <!--Grid column-->
-                </div>
-                <!--Grid row-->
-              </div>
-              <!-- Content -->
-            </div>
-            <!-- Mask & flexbox options-->
-          </div>
-          <!-- Full Page Intro -->
-          <main>
-          <div class="container">
-            <!--Grid row-->
-            <div class="row py-5">
-              <!--Grid column-->
-              <div class="col-md-12 text-center">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?</p>
-              </div>
-              <!--Grid column-->
-            </div>
-            <!--Grid row-->
-          </div>
-        </main>
-        <!--Main Layout-->
 
-  {% comment %} <header class="bg-primary text-white" >
-    <div class="container text-center" sytle="background-image: url(home\static\image_a.jpg); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+
+  <header class="bg-primary text-white" >
+    <div class="container text-center" >
       <h1>Welcome to 철거해조</h1>
       <p class="lead">Likelion</p>
     </div>
-  </header>
+  </header> 
   
-  <section id="about">
-    <div class="container" sytle="background-image: url(home\static\image_a.jpg); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+  <section id="about" >
+    <div class="container" >
       <div class="row">
         <div class="col-lg-8 mx-auto">
-          <h2>철거해조 왜 필요한가요?</h2>
-          <p class="lead">This is a great place to talk about your webpage. This template is purposefully unstyled so you can use it as a boilerplate or starting point for you own landing page designs! This template features:</p>
-          <ul>
-            <li>Clickable nav links that smooth scroll to page sections</li>
-            <li>Responsive behavior when clicking nav links perfect for a one page website</li>
-            <li>Bootstrap's scrollspy feature which highlights which section of the page you're on in the navbar</li>
-            <li>Minimal custom CSS so you are free to explore your own unique design options</li>
-          </ul>
+          <h2>철거/원복/에어컨설치 서비스를 쉽게 찾아보세요!</h2>
+          {% comment %} <img src="media/image_a.jpg"> {% endcomment %}
+          {% comment %} <p class="lead">철거/원복/에어컨설치 서비스를 쉽게 찾아보세요! </p> {% endcomment %}
+          <a class="nav-link" href="{% url 'requests:requests' %}">요청서 둘러보기</a>
+          <a class="nav-link" href="{% url 'home:partners' %}">파트너 둘러보기</a>
+          <div class="row">
+              <div class="col-sm-6">
+                  <div class="card text-center">
+                      <div class="card-body">
+                          <h5 class="card-title">요청서를 작성해보세요</h5>
+                          <br>
+                             
+                          <a href="{%url 'accounts:partner' %}"><button type="submit"
+                                  class="btn btn-primary">가입하기</button></a>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-sm-6">
+                  <div class="card text-center">
+                      <div class="card-body">
+                          <h5 class="card-title">사용자 회원</h5>
+                          <p class="card-text">철거/원복/에어컨 서비스가 필요하신가요? <br>
+                              사용자로 가입해 서비스를 요청해보세요.</p>
+                          <a href="{%url 'accounts:requester' %}"><button type="submit"
+                                  class="btn btn-primary">가입하기</button></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+        
         </div>
       </div>
     </div>
-  </section> {% endcomment %}
+  </section>
 
   {% comment %} <section id="services" class="bg-light">
     <div class="container">

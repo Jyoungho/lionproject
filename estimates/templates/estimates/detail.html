@@ -36,7 +36,7 @@
                 <br>
                 {% if user_extend.user_type == 'R' %}
                     {% comment %} <a href="{% url '' estimate.id %}"><button type="button" class="btn btn-primary">채팅하기</button> {% endcomment %}
-                    <a href=""><button type="button" class="btn btn-primary">채팅하기</button>
+                    <a href="{% url 'chat:chat' user_extend.user.id estimate.ptr_username.id %}"><button type="button" class="btn btn-primary">채팅하기</button>
                 
                 
                 {% elif user_extend.user_type == 'P' %}

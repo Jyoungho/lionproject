@@ -46,7 +46,7 @@
                                     <p class="card-text">예상 견적 금액 : {{ estimate.price }} 만원</p>
                                     <p class="card-text">{{ estimate.cont }}</p>
                                     <a href="{% url 'estimates:detail' estimate.id %}" class="btn btn-link">..more</a>
-                                    <!-- Button trigger modal -->
+                                    {% comment %} <!-- Button trigger modal -->
                                     <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModalLong" data-id="{{ estimate }}">
                                         ..more
                                     </button>
@@ -83,7 +83,7 @@
                                             </div>
                                         </div>
                                     </div>                            
-                                    <!-- End Modal -->
+                                    <!-- End Modal --> {% endcomment %}
                                 </div>
                             </div>
                         </div>

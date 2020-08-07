@@ -3,3 +3,8 @@
     padding: 0px;
     box-sizing: border-box;
 }
+
+.bg-primary {
+    /* background-color: #007bff !important; */
+    background-color: #99ccff !important;
+  }
