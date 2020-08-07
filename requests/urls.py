@@ -21,6 +21,7 @@ app_name='requests'
 urlpatterns = [
     path('', views.requests, name = 'requests'),
     path('new/', views.new, name = 'new'),
+    path('create/', views.create, name = 'create'),
     path('<int:requests_id>/', views.detail, name = 'detail'),
     path('<int:requests_id>/', views.edit, name = 'edit'),
     path('<int:requests_id>/', views.delete, name = 'delete'),

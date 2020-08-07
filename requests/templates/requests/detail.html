@@ -71,6 +71,11 @@
     <a  href="{% url 'estimates:new' req.id %}"><button type="button" class="btn btn-primary">견적서 보내기</button></a>
   </div>
   {% endif %}
+  {% if user_extend.user==request.user %}
+  <div>
+    <a class = "btn btn-primary" href = "{% url 'requests:delete' req.id %}">게시물 삭제</a>
+  </div>
+  {% endif %}
 </section>
 {% endblock %}
 
