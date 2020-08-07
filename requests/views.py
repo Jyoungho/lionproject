@@ -30,11 +30,10 @@ def requests(request):
     page_range = paginator.page_range[start_index:end_index]
     
     if not request.user.is_authenticated:
-        user_extend = User_extend.objects.none()
+        context = {'reqs' : reqs, 'contacts': contacts, 'page_obj':page_obj, 'page':page, 'page_range': page_range, }
     else:
-        user_extend = User_extend.objects.get(user=request.user)
-    
-    context = {'reqs' : reqs, 'contacts': contacts, 'page_obj':page_obj, 'page':page, 'page_range': page_range, 'user_extend': user_extend}
+        context = {'reqs' : reqs, 'contacts': contacts, 'page_obj':page_obj, 'page':page, 'page_range': page_range, 'user_extend': user_extend}
+
     return render(request, 'requests/requests.html', context)
 
 @login_required
@@ -83,13 +82,20 @@ def detail(request, requests_id):
     # 이미지 추가
     images = Request_img.objects.filter(req_id=requests_id)
     
+    if not request.user.is_authenticated:
+        context = {
+            'req' : req,
+            'reqr_info_extend' : reqr_info_extend,
+            'images' : images,
+        }
 
-    context = {
-        'req' : req,
-        'reqr_info_extend' : reqr_info_extend,
-        'user_extend' : user_extend,
-        'images' : images,
-    }
+    else:
+        context = {
+            'req' : req,
+            'reqr_info_extend' : reqr_info_extend,
+            'user_extend' : user_extend,
+            'images' : images,
+        }
     return render(request, 'requests/detail.html', context)
 
 @login_required

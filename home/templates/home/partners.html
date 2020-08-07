@@ -36,9 +36,9 @@
                                                         <p class="card-text">제공 서비스 : {{ partner.svc_cd }}</p>
                                                         <p class="card-text">활동 지역 : {{ partner.area_sido }} {{ partner.area_sigungu }}</p>
                                                         <p class="card-text">경력 : {{ partner.career }}</p>
-                                                        <div class="text-right">
+                                                        {% comment %} <div class="text-right">
                                                             <a href="{% url 'portfolio:list_forAll' partner.user.id %}"><button type="button" class="btn btn-primary">포트폴리오 보러가기</button></a> 
-                                                        </div>
+                                                        </div> {% endcomment %}
                                                     </div>
                                                 </div>
                                             </div>

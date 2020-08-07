@@ -69,7 +69,7 @@
                 <br>
                 {% if user_extend.user_type == 'R' %}
                     {% comment %} <a href="{% url '' estimate.id %}"><button type="button" class="btn btn-primary">채팅하기</button> {% endcomment %}
-                    <a href=""><button type="button" class="btn btn-primary">채팅하기</button>
+                    {% comment %} <a href=""><button type="button" class="btn btn-primary">채팅하기</button> {% endcomment %}
                 
                 
                 {% elif user_extend.user_type == 'P' %}
