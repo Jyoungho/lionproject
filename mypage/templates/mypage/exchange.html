@@ -7,6 +7,7 @@
 {% load static %}
 
 {% block sytle %}
+<link rel="stylesheet" href="{% static 'mypage/style.css' %}" type="text/css" />
 {% endblock %}
  
 {% block content %}
@@ -66,6 +67,12 @@
                     <div class="form-group">
                         <label class="label" for="tel">전화번호</label>
                         <input class="form-control" type="text" id="tel" name="tel" value="{{user_extend.tel}}">
+                    </div>
+
+                    <!--파트너: 업체명-->
+                    <div class="form-group">
+                        <label class="label" for="biz_nm">업체명</label>
+                        <input class="form-control" type="text" id="biz_nm" name="biz_nm" value="{{user_extend.biz_nm}}">
                     </div>
 
                     <!--파트너: 활동지역-->

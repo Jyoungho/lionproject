@@ -29,6 +29,7 @@ def signup_partner(request):
             nickname=request.POST['nickname'] #닉네임
             tel=request.POST['tel'] #전화번호
             #actv_area=request.POST['postcode_sido']+" "+request.POST['postcode_sigungu'] #활동지역
+            biz_nm=request.POST['biz_nm']
             area_sido=request.POST['area_sido']
             area_sigungu=request.POST['area_sigungu']
             svc_cd=request.POST['svc_cd'] #서비스업종
@@ -36,7 +37,7 @@ def signup_partner(request):
             user_type='P' #파트너로 타입 지정
             ptr_join_yn='Y' #파트너로 가입한 이력 yes로 만들어줌
 
-            new_user = User_extend(user=user, nickname=nickname, prof_img=prof_img, tel=tel, area_sido=area_sido, area_sigungu=area_sigungu, svc_cd=svc_cd, work_spc_kind=work_spc_kind, user_type=user_type, ptr_join_yn=ptr_join_yn)
+            new_user = User_extend(user=user, nickname=nickname, prof_img=prof_img, tel=tel, biz_nm=biz_nm, area_sido=area_sido, area_sigungu=area_sigungu, svc_cd=svc_cd, work_spc_kind=work_spc_kind, user_type=user_type, ptr_join_yn=ptr_join_yn)
             new_user.save() #세이브까지!
 
             auth.login(request, user)
