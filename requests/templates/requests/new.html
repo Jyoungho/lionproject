@@ -20,68 +20,126 @@
   </div>
 </header>
 
-<section class = 'col-lg-8 mx-auto'>
-  <h2>게시글 작성</h2>
-  
-  <form action = "{ url 'requests:creat' %}" method = "POST">
-    {% csrf_token %}
-    
-        <div><h3>작성자</h3>
-            <p>username </p>
-            <p>{{user_extend.nickname}}</p>
+<section id ="new">
+    <div class = "container">
+        <div class = "row">
+            <div class ="col-lg-8 mx-auto">
+                <form method="POST" action = "{% url 'requests:create' %}" id = 'requests' enctype = "multipart/form-data">
+                    {% csrf_token %}
+                    <h3>견적서를 요청해보세요!</h3>
+                    <div><h3>작성자</h3>
+                        <p>{{user_extend.nickname}}</p>
+                    </div>
+                    <p>------------------------</p>
+                    <div class = 'form-group'>
+                        <label class = 'label' for = 'title'>제목</label>
+                        <input class = 'form-control' type ='text' id = 'title' name ='title' placeholder = '제목입력' required>
+                    </div>
+                    <p>------------------------</p>
+                    <div class = 'form-group'>
+                        <label class ='label'>본문</label>
+                        <p><textarea cols = 60 rows = 20 name = "cont"></textarea></p>
+                    </div>
+                    <p>------------------------</p>
+                    <div class="form-group">
+                        <label class="label" for="area">작업 지역</label>
+                        <input class="form-control" type="text" id="req_area" name="req_area" placeholder="" required>
+                    </div>
+                    <p>------------------------</p>
+                    <div class="form-group">
+                        <label class="label" for="svc_cd">서비스업종</label>
+                        <select form="requests" class="form-control" id="svc_cd" name="svc_cd" required>
+                            <option selected>선택</option>
+                            <option value="철거">철거</option>
+                            <option value="원복">원복</option>
+                            <option value="에어컨">에어컨</option>
+                            <option value="철거/원복">철거/원복</option>
+                            <option value="철거/원복/에어컨">철거/원복/에어컨</option>
+                        </select>
+                    </div>
+
+                    <p>------------------------</p>
+                    <div class="form-group">
+                        <label class="label" for="work_spc_kind">작업 공간 종류</label>
+                        <select form="requests" class="form-control" id="work_spc_kind" name="work_spc_kind" required>
+                            <option selected>선택</option>
+                            <option value="상가/매장">상가/매장</option>
+                            <option value="사무실/학원">사무실/학원</option>
+                            <option value="식당/카페">식당/카페</option>
+                            <option value="헬스/운동">헬스/운동</option>
+                            <option value="병원">병원</option>
+                            <option value="미용실/뷰티샵">미용실/뷰티샵</option>
+                            <option value="PC방/노래방">PC방/노래</option>
+                            <option value="주거공간">주거공간</option>
+                            <option value="기타">기타</option>
+                        </select>
+                        {% comment %} <input class="form-control" type="text" id="work_spc_kind" name="work_spc_kind_etc"> {% endcomment %}
+                    </div>
+                    <p>------------------------</p>
+                    <div>엘레베이터 여부
+                        <p><input type = 'text' name = 'elev_psb_yn'></p>
+                    </div>
+                    <div class="form-group">
+                        <label class="label" for="work_spc_kind">엘레베이터 여부</label>
+                        <select form="requests" class="form-control" id="elev_psb_yn" name="elev_psb_yn" required>
+                            <option selected>선택</option>
+                            <option value="yes">yes</option>
+                            <option value="no">no</option>
+                        </select>
+                        {% comment %} <input class="form-control" type="text" id="elev_psb_yn" name="elev_psb_yn_etc"> {% endcomment %}
+                    </div>
+                    <p>------------------------</p>
+                
+                    <div class="form-group">
+                        <label class="label" for="area">크기</label>
+                        <input class="form-control" type="text" id="size" name="size" placeholder="" required>
+                    </div>
+                    <p>------------------------</p>
+                    <div class="form-group">
+                        <label class="label" for="area">층수</label>
+                        <input class="form-control" type="text" id="floorr" name="floor" placeholder="" required>
+                    </div>
+                    <p>------------------------</p>
+                    <div>요청일 시작
+                        <p>{{req.req_exp_stt_dt}}</p>
+                    </div>
+                    <p>------------------------</p>
+                    <div>요청일 만료
+                        <p>{{req.req_exp_end_dt}}</p>
+                    </div>
+                    <p>------------------------</p>
+                    <div>작얼일 시작
+                        <p>{{req.work_stt_dt}}</p>
+                    </div>
+                    <p>------------------------</p>
+                    <div>작업일 종료
+                        <p>{{req.work_end_dt}}</p>
+                    </div>
+                    <p>------------------------</p>
+                    <div>게시일
+                        <p>{{mod_dtti}}</p>
+                    </div>
+                    <!-- 이미지 추가 -->
+                    <div class="form-group">
+                        {% comment %} <label for="images">사진 첨부</label>
+                        <input class="form-control-file" type="file" id="images" name="images" multiple required> {% endcomment %}
+                        {{ form.as_p }}
+                    </div>
+                    <!-- 생성하기 -->
+                    <div align="right">
+                        <button type="submit" class="btn btn-primary mb-4 pull-right">작성</button>
+                    </div>
+                
+                </form>
+                <div class = "text-right">
+                    <a href = "{% url 'portfolio:list_forP' %}">목록</a>
+                </div>
+            </div>
         </div>
-        <p>------------------------</p>
-        <div><h3>제목</h3>
-            <p><input type = 'text' name = 'title'/></p>
-        </div>
-        <p>------------------------</p>
-        <div><h3>본문</h3>
-            <p><textarea cols = 60 rows = 20 name = "cont"></textarea></p>
-        </div>
-        <p>------------------------</p>
-        <div><h3>일하는 구역</h3>
-            <p><input type = 'text' name = 'req_area'></p>
-        </div>
-        <p>------------------------</p>
-        <div>분야
-            <p>{{req.svc_cd}}</p>
-        </div>
-        <p>------------------------</p>
-        <div>작업종류
-            <p>{{req.work_spc_kind}}</p>
-        </div>
-        <p>------------------------</p>
-        <div>엘레베이터 여부
-            <p>{{req.elev_psb_yn}}</p>
-        </div>
-        <p>------------------------</p>
-        <div>크기
-            <p>{{req.size}}</p>
-        </div>
-        <p>------------------------</p>
-        <div>층수
-            <p>{{req.floor}}</p>
-        </div>
-        <p>------------------------</p>
-        <div>요청일 시작
-            <p>{{req.req_exp_stt_dt}}</p>
-        </div>
-        <p>------------------------</p>
-        <div>요청일 만료
-            <p>{{req.req_exp_end_dt}}</p>
-        </div>
-        <p>------------------------</p>
-        <div>작얼일 시작
-            <p>{{req.work_stt_dt}}</p>
-        </div>
-        <p>------------------------</p>
-        <div>작업일 종료
-            <p>{{req.work_end_dt}}</p>
-        </div>
-        <p>------------------------</p>
-        <div>게시일
-            <p>{{mod_dtti}}</p>
-        </div>
+    </div>
+</section>
+
+
 
   </form>
 
