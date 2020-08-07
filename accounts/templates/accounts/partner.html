@@ -7,6 +7,7 @@
 {% load static %}
 
 {% block sytle %}
+    <link rel="stylesheet" href="{% static 'accounts/style.css' %}" type="text/css" />
 {% endblock %}
  
 {% block content %}
@@ -75,13 +76,13 @@
                         <input class="form-control" type="text" id="tel" name="tel" placeholder="'-' 없이 입력해주세요.">
                     </div>
 
-                    <!--파트너: 활동지역-->
-                    <!--
-                        <div class="form-group">
-                        <label class="label" for="actv_area">활동지역</label>
-                        <input class="form-control" type="text" id="actv_area" name="actv_area" placeholder="드롭다운변경, 아이디검토">
+                    <!--파트너: 업체명-->
+                    <div class="form-group">
+                        <label class="label" for="biz_nm">업체명</label>
+                        <input class="form-control" type="text" id="biz_nm" name="biz_nm">
                     </div>
-                    -->
+                   
+                    <!--파트너: 작업 가능 지역-->
                     <div class="form-group">
                         <label class="label" for="area">작업 지역</label><br>
                         <div class="inline">

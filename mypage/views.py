@@ -57,6 +57,7 @@ def update(request):
     if 'prof_img' in request.FILES:
         user_extend.prof_img = request.FILES['prof_img']
     if user_extend.user_type == 'P':
+        user_extend.biz_nm=request.POST['biz_nm']
         user_extend.area_sido=request.POST['area_sido']
         user_extend.area_sigungu=request.POST['area_sigungu']
         user_extend.svc_cd=request.POST['svc_cd']
@@ -73,6 +74,7 @@ def update_exchange(request):
     user_extend.tel=request.POST['tel']
     if 'prof_img' in request.FILES:
         user_extend.prof_img = request.FILES['prof_img']
+    user_extend.biz_nm=request.POST['biz_nm']
     user_extend.area_sido=request.POST['area_sido']
     user_extend.area_sigungu=request.POST['area_sigungu']
     user_extend.svc_cd=request.POST['svc_cd']
