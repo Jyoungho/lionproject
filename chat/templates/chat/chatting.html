@@ -16,51 +16,25 @@
                     <div class="col-lg-8 mx-auto">
                         <div class="chat_wrap">
                             <div class="header">
-                            {% if user_extend.user_type == 'R' %}
-                                {{ chat_room.ptr.user_extend.biz_nm }}
-                            {% elif user_extend.user_type == 'P' %}
-                                {{ chat_room.reqr.user_extend.nickname }}
-                            {% endif %}
+                                {% if user_extend.user_type == 'R' %}
+                                    {{ chat_room.ptr.user_extend.biz_nm }}
+                                {% elif user_extend.user_type == 'P' %}
+                                    {{ chat_room.reqr.user_extend.nickname }}
+                                {% endif %}
+                            </div>
+
+                            <!-- 동적 생성 -->    
+                            <!-- 말풍선(대화) == conversation -->
+                            <div id="conversation">
                             </div>
                             
-                            {% if chat_messages %}
-                            <div class="chat">
-                                
-                                <!-- 동적 생성 -->
-                                <!-- 메시지 한 칸 format -->
-                                <div class="chat format">
-                                    <ul>
-                                        <li>
-                                            <div class="sender"> 
-                                                <span>sender</span>
-                                            </div>
-                                            <div class="message">
-                                                <span>message</span>
-                                            </div>
-                                        </li>
-                                    </ul>
+                            <!-- 새 메세지 입력 -->
+                            <form id="chatform">
+                                <div id="input_div" class="inline">
+                                    <textarea id="input_message" placeholder="Press Enter for send message."></textarea>
+                                    <button id="send" type="submit" class="btn btn-primary">Send</button>
                                 </div>
-                                <div class="chat format">
-                                    <ul>
-                                        <li>
-                                            <div class="sender"> 
-                                                <span>sender</span>
-                                            </div>
-                                            <div class="message">
-                                                <span>message</span>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            {% else %}
-                            <div class="chat">
-                            </div>
-                            {% endif %}
-
-                            <div class="input-div">
-                                <textarea placeholder="Press Enter for send message."></textarea>
-                            </div>
+                            </form>
                         
                             
                         </div>
@@ -69,107 +43,118 @@
             </div>
         </section>
 
-        <section id="send_message">
-            
-                <div class="form-group">
-                {% if user_extend.user_type == 'R' %} 
-                    <form method="POST" action="{% url 'chat:send_message' user_extend.user.id chat_room.ptr.id  %}" id="send_message">
-                        {% csrf_token %}
-                        <div class="inline">
-                            <textarea class="form-control" id="message" rows="3" name="message" placeholder="Press Enter for send message." ></textarea>
-                            <input class="btn btn-secondary send" type="button"  value="Send"><br>
+        {% comment %} <section id="send_message">
+            <div class="container">
+                <div class="row">   
+                    <div class="col-lg-8 mx-auto">
+                        <div class="form-group">
+                        {% if user_extend.user_type == 'R' %} 
+                            <form method="POST" action="{% url 'chat:send_message' user_extend.user.id chat_room.ptr.id  %}" id="send_message">
+                                {% csrf_token %}
+                                <div class="inline">
+                                    <textarea class="form-control" id="new_message" rows="3" name="message" placeholder="Press Enter for send message." ></textarea>
+                                    <input class="btn btn-secondary send" type="button"  value="Send"><br>
+                                </div>
+                            </form>
+
+                        {% elif user_extend.user_type == 'P' %}
+                            <form method="POST" action="{% url 'chat:send_message' chat_room.reqr.id user_extend.user.id  %}" id="send_message">
+                                {% csrf_token %}
+                                <div class="inline">
+                                    <textarea class="form-control" id="new_message" rows="3" name="message" placeholder="Press Enter for send message." ></textarea>
+                                    <button type="submit" class="btn btn-primary">Send</button>
+                                </div>
+                            </form> 
+                        {% endif %}
                         </div>
-                    </form>
+                    </div>
+                </div>        
+            </div>     
+        </section> {% endcomment %}
 
-                {% elif user_extend.user_type == 'P' %}
-                    <form method="POST" action="{% url 'chat:send_message' chat_room.reqr.id user_extend.user.id  %}" id="send_message">
-                        {% csrf_token %}
-                        <div class="inline">
-                            <textarea class="form-control" id="message" rows="3" name="message" placeholder="Press Enter for send message." ></textarea>
-                            <button type="submit" class="btn btn-primary">Send</button>
-                        </div>
-                    </form> 
-                {% endif %}
-                </div>
-             
-        </section>
-
-
-
+<!--jQuery Library -->
+<script
+  src="https://code.jquery.com/jquery-3.5.1.min.js"
+  integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
+  crossorigin="anonymous"></script>
 <script>
-    const Chat = (function(){
-        const myName = "blue"; //보낸사람
-    
-        // init 함수
-        function init() {
-            // enter 키 이벤트
-            $(document).on('keydown', 'div.input-div textarea', function(e){
-                if(e.keyCode == 13 && !e.shiftKey) {
-                    e.preventDefault();
-                    const message = $(this).val();
-    
-                    // 메시지 전송
-                    sendMessage(message);
-                    // 입력창 clear
-                    clearTextarea();
+// jQuery문법
+// $.('#tag_id').click(function(){ ... })  : tag_id 라는 id를 가진 버튼을 클릭하면 함수가 실행됨
+// $.('#input_id').html('') : input_id 라는 id를 가진 곳에 value를 넣는다
+
+    if (user_extend.user_type === 'R') {
+        chat_url = "{% url 'chat:chat' user_extend.user.id chat_room.ptr.id  %}";
+    } else {
+        chat_url = "{% url 'chat:chat' chat_room.reqr.id user_extend.user.id %}";
+    }
+
+    // 메세지(말풍선 1개) display
+    function display_message(data) {
+	    $("#conversation").append("<p><span class='writer'>"
+				                + (data['writer_id'] ? data['writer_id'] : "&lt;unknown&gt;") // data['writer_id']는 서버로 부터 받은 데이터가 담겨있는 data변수에서 (json 타입) key가 'writer_id'인 것의 value를 가져온 것
+				                + "</span>: " + data['message'] + "</p>");
+		$("#conversation").each(function () {
+					  this.scrollTop = this.scrollHeight;
+				  });
+    }
+
+    // 전체 메세지 polling
+    function poll() {
+        var poll_interval=0;
+
+        $.ajax({ // ajax 통신
+            url: chat_url, // 이 곳(=여기가 통신할 서버)으로 부터 데이터를 받음(데이터 내놔! 하는 경로)
+            type: 'GET',  // 데이터를 전송하는 방법(POST, GET)
+            dataType: 'json',  // 서버측에서 전송한 데이터를 어떤 형식의 데이터로서 해석할 것인가를 지정, 없으면 알아서 판단
+            success: function(messages) {  // ajax 통신에 성공했을 때 호출할 콜백 지정. data는 통신 성공했을 때 서버로부터 받아오는 데이터를 'data'라는 이름의 매개변수에 담은 것
+                
+                for (var message in messages){
+                    display_message(message);
                 }
-            });
-        }
-    
-        // 메세지 태그 생성
-        function createMessageTag(LR_className, senderName, message) {
-            // 형식 가져오기
-            let chatLi = $('div.chat.format ul li').clone();
-    
-            // 값 채우기
-            chatLi.addClass(LR_className);
-            chatLi.find('.sender span').text(senderName);
-            chatLi.find('.message span').text(message);
-    
-            return chatLi;
-        }
-    
-        // 메세지 태그 append
-        function appendMessageTag(LR_className, senderName, message) {
-            const chatLi = createMessageTag(LR_className, senderName, message);
-    
-            $('div.chat:not(.format) ul').append(chatLi);
-    
-            // 스크롤바 아래 고정
-            $('div.chat').scrollTop($('div.chat').prop('scrollHeight'));
-        }
-    
-        // 메세지 전송
-        function sendMessage(message) {
-            // 서버에 전송하는 코드로 후에 대체
-            const data = {
-                "senderName"    : "blue",
-                "message"        : message
-            };
-    
-            // 통신하는 기능이 없으므로 여기서 receive
-            resive(data);
-        }
-    
-        // 메세지 입력박스 내용 지우기
-        function clearTextarea() {
-            $('div.input-div textarea').val('');
-        }
-    
-        // 메세지 수신
-        function resive(data) {
-            const LR = (data.senderName != myName)? "left" : "right";
-            appendMessageTag("right", data.senderName, data.message);
-        }
-    
-        return {
-            'init': init
-        };
-    })();
-    
-    $(function(){
-        Chat.init();
-    });
+                //display_message(data);
+                poll_interval=0;
+            },
+            error: function (error) {  // 실패했을 때 호출할 콜백 지정. 통신할때 어떤 에러가 발생했는지 error에 담음
+                alert('ajax 통신 실패')
+                alert(error)
+                // poll_interval=1000;
+            },
+            complete: function () {
+                setTimeout(poll, poll_interval);
+            },
+        });
+    }
+
+    // 새 메세지 전송과 DB 저장
+    function send_message() {
+        $.ajax({
+            url: "{% url 'chat:chat' user_extend.user.id chat_room.ptr.id  %}",
+            type: 'POST',
+            dataType: 'json',
+            data: {  // 서버로 데이터를 "전송"할때 이 옵션을 사용
+                writer_id: "{{ user_extend.user.id }}",
+                message: $("#input_message").val(),
+            },
+            error : function(){
+                alert('저장 실패')
+            },
+            complete: function () {
+                $("#input_message").val(""); // textarea clear
+            },
+        });
+    }
+
+    $(function() {
+        $("#send").click(send_message);
+        $("#chatform").submit(function (event) {
+            send_message();
+            event.preventDefault();
+        });
+
+        poll();
+    })
+
+
 </script>
 
 

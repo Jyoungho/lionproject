@@ -6,7 +6,7 @@ from portfolio.models import Portfolio
 from .models import Chat_room, Chat_message
 from django.core import serializers
 from django.http import HttpResponse, JsonResponse
-import json
+import simplejson as json
 
 
 @login_required
@@ -55,31 +55,54 @@ def send_message(request, reqr_id, ptr_id):
     return redirect('chat:chat', reqr_id, ptr_id)
 
 
+
+# 요청자로 로그인해서 파트너에게 채팅을 요청할때 (견적서 보고나서)
+# 파트너로 로그인해서 요청자에게 채팅을 요청할때 (요청서 보고나서)
+# navigation 메뉴에서 채팅방에 들어올때 
 @login_required
 def chat(request, reqr_id, ptr_id):
-
-    # 요청자로 로그인해서 파트너에게 채팅을 요청할때 (견적서 보고나서)
-    # 파트너로 로그인해서 요청자에게 채팅을 요청할때 (요청서 보고나서)
-    # navigation 메뉴에서 채팅방에 들어올때 
-    
     user_extend = User_extend.objects.get(user=request.user)
-    chat_room = Chat_room.objects.get(reqr_id=reqr_id, ptr_id=ptr_id)
-    chat_messages = Chat_message.objects.filter(chat_room=chat_room)
-    chat_messages_list = serializers.serialize('json', chat_messages)
- 
+    if request.is_ajax(): 
+        if (request.method == 'POST'): # send message 저장
+            chat_room = Chat_room.objects.get(reqr_id=reqr_id, ptr_id=ptr_id)
+            writer_id = request.user.id
+            message = request.POST.get('message', None)
+            chat_message = Chat_message(chat_room=chat_room, writer_id=writer_id, message=message)
+            chat_message.save()
+            print(chat_message)
+            response_data = {}
+            response_data['writer_id'] = writer_id
+            response_data['message'] = message
+            # response_data['reg_dtti'] = reg_dtti
+
+            return HttpResponse(json.dumps(response_data), content_type="application/json")
+        
+        else: # 새로운 메세지를 받을 때 마다
+            chat_messages = Chat_message.objects.filter(chat_room=chat_room)
+            chat_messages_list = serializers.serialize('json', chat_messages)
+            return HttpResponse(chat_messages_list, content_type="text/json-comment-filtered")
+
+
+    else: # chatting.html로 들어올때
+        chat_room = Chat_room.objects.get(reqr_id=reqr_id, ptr_id=ptr_id)
+        chat_messages = Chat_message.objects.filter(chat_room=chat_room)
+        # chat_messages_list = serializers.serialize('json', chat_messages)
+        context = {
+            'user_extend' : user_extend,
+            'chat_room' : chat_room,
+            'chat_messages' : chat_messages,
+            # 'chat_messages_list' : json.loads(chat_messages_list),
+        }
+        return render(request, 'chat/chatting.html', context)
+    
+    
+    
+    
     # chat_messages = Chat_message.objects.filter(chat_room=chat_room)
     # chat_messages_list = serializers.serialize('json', chat_messages)
     # return HttpResponse(chat_messages_list, content_type="text/json-comment-filtered")
 
-    context = {
-        'user_extend' : user_extend,
-        'chat_room' : chat_room,
-        'chat_messages_list' : json.loads(chat_messages_list),
-    }
-    print(context)
-
-    return render(request, 'chat/chatting.html', context)
     
-# 참고
-    # hr = MF_Version().get_MF_Version().json()
-    # return render(request, 'mediafire/version.html', {'hr': hr}
+    # print(context)
+
+    
