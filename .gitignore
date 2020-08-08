@@ -1,6 +1,10 @@
 
 .vscode/settings.json
-
+db_name.json
+db_user.json
+db_pw.json
+db_host.json
+db_port.json
 
 # Created by https://www.toptal.com/developers/gitignore/api/django
 # Edit at https://www.toptal.com/developers/gitignore?templates=django
